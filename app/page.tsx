@@ -2,85 +2,51 @@
 
 import { useState } from "react";
 
-const faqs = [
-  ["Where do you train?", "Refinery Fitness serves Buda, Kyle, and Hays County. Training can happen at your home, in a garage gym, at a commercial gym, or virtually—depending on the plan that fits your life."],
-  ["Is this only for people who are already fit?", "No. Strong Start is built for the person ready to begin again, build consistency, and be coached without intimidation or guesswork."],
-  ["What is the RPMS Method?", "RPMS means Relational, Physical, Mental, and Spiritual. It is a whole-person coaching framework: better health should strengthen the way you live, not consume it."],
-  ["What happens in an intro session?", "You will talk through your goals, your schedule, your training history, and the kind of support you need. Then you will leave with a clear next step—no pressure."],
+const programs = [
+  { id: "strong", number: "01", label: "Signature reset", name: "Strong Start", line: "Build the system before you chase the result.", copy: "Four weekly workouts, habit coaching, and a standing check-in make your next right decision obvious.", includes: ["4 workouts every week", "Weekly coaching check-in", "Mindset + habit system"], action: "Ask about Strong Start" },
+  { id: "one", number: "02", label: "High-touch coaching", name: "1:1 Training", line: "A program built around your life, not the other way around.", copy: "Train in person with coaching that meets your goals, schedule, experience, and the season you are in.", includes: ["Personalized training plan", "In-person movement coaching", "Accountability that adapts"], action: "Explore 1:1 coaching" },
+  { id: "mobile", number: "03", label: "Buda + Kyle", name: "Mobile Training", line: "Exceptional coaching, right where life happens.", copy: "Bring the focus of a thoughtful training session to your home, garage gym, or preferred local setting.", includes: ["At-home or garage-gym sessions", "Buda, Kyle + Hays County", "Built for busy schedules"], action: "Ask about mobile training" },
 ];
 
-const schema = {
-  "@context": "https://schema.org",
-  "@graph": [
-    { "@type": "HealthClub", name: "Refinery Fitness of Buda", description: "Faith-first, science-backed personal training and health coaching in Buda, Texas.", url: "https://refineryfitness.biz", email: "jeff@refineryfitness.biz", areaServed: ["Buda, TX", "Kyle, TX", "Hays County, TX"], priceRange: "$$", founder: { "@type": "Person", name: "Jeff Mensing", jobTitle: "Personal Trainer & Health Coach" }, sameAs: ["https://www.instagram.com/refineryfitnessofbuda/", "https://www.facebook.com/p/Refinery-Fitness-of-Buda-61576662147080/", "https://www.linkedin.com/in/jeffmensing/"] },
-    { "@type": "FAQPage", mainEntity: faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) },
-  ],
-};
+const faqs = [
+  ["Who is Refinery Fitness for?", "For people who want a practical, values-aligned way to get strong, feel capable, and stay consistent. You do not need to be fit to begin."],
+  ["Where do sessions happen?", "Refinery Fitness serves Buda, Kyle, and Hays County with in-person, mobile, and virtual options. The best setting depends on your plan and schedule."],
+  ["What makes the RPMS Method different?", "It treats lasting health as relational, physical, mental, and spiritual. Training is designed to strengthen the rest of your life—not take it over."],
+  ["What happens in a free intro?", "It is a clear, no-pressure conversation about what you want to change, what has gotten in the way, and the best next step."],
+];
+
+const schema = { "@context": "https://schema.org", "@graph": [
+  { "@type": "HealthClub", name: "Refinery Fitness of Buda", description: "Faith-first, science-backed personal training and health coaching in Buda, Texas.", url: "https://refineryfitness.biz", email: "jeff@refineryfitness.biz", priceRange: "$$", areaServed: ["Buda, TX", "Kyle, TX", "Hays County, TX"], founder: { "@type": "Person", name: "Jeff Mensing", jobTitle: "Personal Trainer & Health Coach" }, sameAs: ["https://www.instagram.com/refineryfitnessofbuda/", "https://www.facebook.com/p/Refinery-Fitness-of-Buda-61576662147080/"] },
+  { "@type": "FAQPage", mainEntity: faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) }
+] };
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [quizStep, setQuizStep] = useState(0);
-  const [answers, setAnswers] = useState<string[]>([]);
-  const questions = [
-    ["Your biggest friction right now?", "I don’t have time", "I don’t know what to do", "I can’t stay consistent"],
-    ["The support you want most?", "A plan that is mine", "Someone to check in", "Training that fits my values"],
-    ["How do you want to train?", "In person", "At home / mobile", "Virtually"],
-  ];
-  const choose = (answer: string) => {
-    setAnswers([...answers, answer]);
-    setQuizStep(quizStep + 1);
-  };
-  const scrollTo = (id: string) => { setMenuOpen(false); document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); };
+  const [activeProgram, setActiveProgram] = useState(0);
+  const [answer, setAnswer] = useState(0);
+  const [openFaq, setOpenFaq] = useState(0);
+  const program = programs[activeProgram];
+  const next = () => setAnswer((n) => n + 1);
+  return <main>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    <nav><a className="logo" href="#top"><b>R</b><span>REFINERY</span><i>FITNESS / BUDA</i></a><div className="nav-links"><a href="#method">Method</a><a href="#programs">Programs</a><a href="#about">Story</a></div><a className="nav-book" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book an intro <em>↗</em></a></nav>
 
-  return (
-    <main>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <nav className="nav" aria-label="Main navigation">
-        <a className="brand" href="#top" onClick={() => scrollTo("top")}><span>R</span> REFINERY <i>FITNESS · BUDA</i></a>
-        <button className="menu" aria-expanded={menuOpen} aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>MENU</button>
-        <div className={`navlinks ${menuOpen ? "open" : ""}`}>
-          <button onClick={() => scrollTo("method")}>Method</button><button onClick={() => scrollTo("programs")}>Programs</button><button onClick={() => scrollTo("about")}>About</button><button onClick={() => scrollTo("faq")}>FAQ</button>
-          <a className="nav-cta" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book your intro</a>
-        </div>
-      </nav>
+    <header className="hero" id="top"><div className="hero-image" /><div className="hero-shade" /><div className="hero-grid" /><div className="hero-copy"><p className="kicker"><b /> PERSONAL TRAINING · BUDA, TEXAS</p><h1>MORE THAN<br /><strong>MOTION.</strong></h1><p className="hero-summary">Science-backed coaching for people who are ready to become strong enough for the life they are called to live.</p><div className="hero-actions"><a className="button lime" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book your free intro <span>↗</span></a><a className="watch" href="#method"><i>↓</i> See what makes this different</a></div></div><div className="hero-meta"><span>BUDA · KYLE · HAYS COUNTY</span><span>IN PERSON / MOBILE / VIRTUAL</span></div><div className="hero-scroll">SCROLL TO BUILD <b>↓</b></div></header>
 
-      <header id="top" className="hero">
-        <div className="grid-noise" /><div className="orb orb-one" /><div className="orb orb-two" />
-        <div className="hero-copy">
-          <p className="eyebrow"><span /> Personal training · Buda, Texas</p>
-          <h1>TRAIN WITH<br /><em>MORE</em> IN MIND.</h1>
-          <p className="hero-lede">Faith-first, science-backed coaching for people who are done starting over. Build strength that carries into the rest of your life.</p>
-          <div className="hero-actions"><a className="button primary" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book a free intro <b>↗</b></a><button className="text-link" onClick={() => scrollTo("method")}>Explore the method <b>↓</b></button></div>
-          <div className="trust"><span>BUDA · KYLE · HAYS COUNTY</span><span>IN PERSON + VIRTUAL</span></div>
-        </div>
-        <div className="hero-art" aria-label="Abstract illustration of strength and momentum"><div className="ring r1" /><div className="ring r2" /><div className="ring r3" /><div className="art-label top">THE WHOLE PERSON</div><div className="art-label bottom">REFINED / 01</div><div className="bar b1" /><div className="bar b2" /><div className="bar b3" /></div>
-      </header>
+    <section className="marquee" aria-label="Refinery Fitness values"><div>RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i></div></section>
 
-      <section className="proof"><p>“No one is too far gone.”</p><div><span>RELATIONAL</span><span>PHYSICAL</span><span>MENTAL</span><span>SPIRITUAL</span></div></section>
+    <section className="intro section" id="method"><div className="intro-head"><p className="kicker dark"><b /> THE RPMS METHOD</p><h2>THE BODY IS<br />PART OF THE<br /><em>STORY.</em></h2></div><div className="intro-copy"><p>Most programs ask, <strong>“How hard can you go?”</strong> We start somewhere better: <strong>“What would it look like to become whole?”</strong></p><p>The RPMS Method helps you train the physical, without ignoring the relational, mental, and spiritual habits that make progress stick.</p><a className="under-link" href="mailto:jeff@refineryfitness.biz?subject=The%20RPMS%20Method">Talk through the RPMS Method <span>↗</span></a></div><div className="method-map">{[["R","Relational","Coaching that makes room for real life."],["P","Physical","Strength and nutrition with a clear why."],["M","Mental","Habits that survive your hardest week."],["S","Spiritual","Health as stewardship—not self-worship."]].map(([letter,title,copy]) => <article key={letter}><span>{letter}</span><h3>{title}</h3><p>{copy}</p><i>0{["R","P","M","S"].indexOf(letter)+1}</i></article>)}</div></section>
 
-      <section id="method" className="section method">
-        <div className="section-head"><p className="eyebrow"><span /> THE RPMS METHOD</p><h2>YOUR BODY ISN’T<br />THE <em>WHOLE</em> STORY.</h2></div>
-        <div className="method-intro"><p>More workouts won’t fix a life that has no margin. Refinery Fitness builds a practical plan around the four things that make change last.</p><a href="mailto:jeff@refineryfitness.biz?subject=Tell%20me%20about%20RPMS">Talk through your goals <b>↗</b></a></div>
-        <div className="pillars">
-          {[['01','Relational','Build a stronger life with people who help you show up.'],['02','Physical','Train intelligently. Fuel simply. Move with purpose.'],['03','Mental','Replace all-or-nothing with habits that hold.'],['04','Spiritual','Treat health as stewardship, not self-worship.']].map(([num,title,text]) => <article className="pillar" key={title}><span>{num}</span><h3>{title}</h3><p>{text}</p><i>↗</i></article>)}
-        </div>
-      </section>
+    <section className="visual-break"><div className="photo-coaching" /><div className="visual-quote"><p>“The work is physical.<br />The <em>change</em> is bigger.”</p><span>REFINERY FITNESS / THE WHOLE PERSON</span></div></section>
 
-      <section id="programs" className="section programs">
-        <div className="program-header"><p className="eyebrow"><span /> START HERE</p><h2>CONSISTENCY,<br /><em>ENGINEERED.</em></h2><p>Choose the level of coaching that makes your next right step obvious.</p></div>
-        <article className="featured-program"><div className="program-number">01</div><div><p className="tag">SIGNATURE PROGRAM</p><h3>STRONG START</h3><p className="program-copy">A coached reset for the person who wants a plan, accountability, and a foundation that will not disappear after a hard week.</p><ul><li>4 workouts each week</li><li>Weekly check-ins</li><li>Mindset + habit coaching</li></ul></div><a className="button light" href="mailto:jeff@refineryfitness.biz?subject=Strong%20Start%20Program">Ask about Strong Start <b>↗</b></a></article>
-        <div className="program-list"><article><span>02</span><h3>1:1 COACHING</h3><p>Personal training built around your goals and real calendar.</p><a href="mailto:jeff@refineryfitness.biz?subject=1%3A1%20Coaching">Learn more ↗</a></article><article><span>03</span><h3>MOBILE TRAINING</h3><p>Expert coaching that comes to your home or garage gym.</p><a href="mailto:jeff@refineryfitness.biz?subject=Mobile%20Training">Learn more ↗</a></article><article><span>04</span><h3>VIRTUAL COACHING</h3><p>A clear plan and a coach in your corner—wherever you are.</p><a href="mailto:jeff@refineryfitness.biz?subject=Virtual%20Coaching">Learn more ↗</a></article></div>
-      </section>
+    <section className="programs section" id="programs"><div className="program-title"><p className="kicker dark"><b /> FIND YOUR START</p><h2>DON’T JUST<br />START.<br /><em>STAY WITH IT.</em></h2><p>A pathway for your schedule. A system for your life.</p></div><div className="program-console"><div className="program-tabs">{programs.map((item, index) => <button key={item.id} className={activeProgram === index ? "active" : ""} onClick={() => setActiveProgram(index)}><small>{item.number}</small>{item.name}<span>↗</span></button>)}</div><div className="program-detail"><div><p className="program-label">{program.label}</p><h3>{program.name}</h3><p className="program-line">{program.line}</p><p className="program-copy">{program.copy}</p><a className="button orange" href={`mailto:jeff@refineryfitness.biz?subject=${encodeURIComponent(program.action)}`}>{program.action} <span>↗</span></a></div><ul>{program.includes.map((item) => <li key={item}><b>+</b>{item}</li>)}</ul><div className="program-index">0{activeProgram+1}<i>/</i>03</div></div></div></section>
 
-      <section className="section assessment"><div><p className="eyebrow"><span /> 90-SECOND CHECK-IN</p><h2>WHAT KIND OF<br /><em>SUPPORT</em> DO YOU NEED?</h2><p className="assessment-copy">Answer three quick questions. We’ll point you toward a better starting line.</p></div><div className="quiz">{quizStep < questions.length ? <><p className="quiz-count">0{quizStep + 1} / 03</p><h3>{questions[quizStep][0]}</h3>{questions[quizStep].slice(1).map((option) => <button key={option} onClick={() => choose(option)}>{option}<b>→</b></button>)}</> : <><p className="quiz-count">YOUR NEXT STEP</p><h3>You don’t need more noise. You need a plan.</h3><p>Let’s turn your answers into a simple starting point.</p><a className="button primary" href="mailto:jeff@refineryfitness.biz?subject=My%20RPMS%20Check-In">Get my recommendation <b>↗</b></a><button className="restart" onClick={() => { setQuizStep(0); setAnswers([]); }}>Start again</button></>}</div></section>
+    <section className="assessment"><div className="assessment-copy"><p className="kicker"><b /> 90-SECOND CHECK-IN</p><h2>WHAT WOULD<br />MAKE YOU<br /><em>UNSTOPPABLE?</em></h2><p>There is no perfect plan. There is a next right step. Find yours.</p></div><div className="check-in">{answer < 3 ? <><p className="step">0{answer+1} <span>/ 03</span></p><h3>{["What usually ends a good routine?", "What kind of support would change the game?", "Where does training need to fit?"][answer]}</h3><div className="choices">{[["Time gets away from me", "I do not know what to do", "I lose momentum"],["A plan built for me", "Someone who checks in", "Training that fits my values"],["In person", "At home / mobile", "Virtually"]][answer].map((item) => <button onClick={next} key={item}>{item}<b>→</b></button>)}</div></> : <><p className="step">YOUR DIRECTION</p><h3>A plan is waiting on the other side of one honest conversation.</h3><p>Let’s turn what is getting in your way into your way forward.</p><a className="button lime" href="mailto:jeff@refineryfitness.biz?subject=My%20Refinery%20Check-In">Get my recommendation <span>↗</span></a><button className="reset" onClick={() => setAnswer(0)}>Start over</button></>}</div></section>
 
-      <section id="about" className="section founder"><div className="portrait-card"><div className="portrait-mark">J<br />M</div><p>BUDA, TX<br />EST. 2025</p></div><div><p className="eyebrow"><span /> MEET YOUR COACH</p><h2>THE GOAL ISN’T<br />JUST <em>STRONGER.</em></h2><p className="founder-copy">Refinery Fitness was founded by Jeff Mensing to help people rebuild their mind, body, and soul—through relational coaching, intelligent training, and the belief that a healthier tomorrow is built one honest decision at a time.</p><p className="founder-note">Kinesiology-trained · Coaching in Buda, Kyle &amp; Hays County</p><a className="text-link" href="mailto:jeff@refineryfitness.biz?subject=Coaching%20Question">Meet Jeff in an intro session <b>↗</b></a></div></section>
+    <section className="proof section" id="about"><div><p className="kicker dark"><b /> A DIFFERENT KIND OF COACHING</p><h2>YOU’RE NOT<br />BEHIND.<br />YOU’RE <em>HERE.</em></h2></div><div className="proof-story"><p>Refinery Fitness is built for the person tired of fitness culture that demands more than life can give. Jeff Mensing brings a Kinesiology-trained, faith-first approach to strength, health, and confidence—without the noise or the guilt.</p><p className="proof-note">NO ONE IS TOO FAR GONE.</p><a className="under-link" href="mailto:jeff@refineryfitness.biz?subject=Meet%20Jeff">Meet Jeff in a free intro <span>↗</span></a></div><div className="result-card"><span>REAL PROGRESS<br />NOT EMPTY PROMISES</span><p><strong>+5 LB</strong> lean muscle<br /><strong>−4%</strong> body fat</p><small>Documented client result over approximately four months.</small></div></section>
 
-      <section id="faq" className="section faq"><div className="section-head"><p className="eyebrow"><span /> CLEAR ANSWERS</p><h2>LET’S MAKE<br />THIS <em>SIMPLE.</em></h2></div><div className="faq-list">{faqs.map(([q,a], index) => <details key={q} open={index === 0}><summary>{q}<b>+</b></summary><p>{a}</p></details>)}</div></section>
+    <section className="faq section"><div><p className="kicker"><b /> CLEAR ANSWERS</p><h2>LESS<br />GUESSING.<br /><em>MORE GOING.</em></h2></div><div className="faq-list">{faqs.map(([question, response], index) => <article className={openFaq === index ? "open" : ""} key={question}><button onClick={() => setOpenFaq(openFaq === index ? -1 : index)}><span>0{index+1}</span>{question}<b>{openFaq === index ? "−" : "+"}</b></button><div><p>{response}</p></div></article>)}</div></section>
 
-      <section className="final-cta"><p className="eyebrow"><span /> YOUR NEXT REP</p><h2>BUILD A BODY.<br /><em>RECLAIM</em> YOUR LIFE.</h2><p>A free intro session is a conversation, not a commitment.</p><a className="button primary" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book your free intro <b>↗</b></a></section>
-      <footer><a className="brand" href="#top"><span>R</span> REFINERY <i>FITNESS · BUDA</i></a><p>Faith-first, science-backed personal training and health coaching.</p><a href="mailto:jeff@refineryfitness.biz">jeff@refineryfitness.biz</a><p className="fine">Serving Buda, Kyle &amp; Hays County, Texas · © {new Date().getFullYear()} Refinery Fitness</p></footer>
-      <a className="mobile-cta" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">BOOK FREE INTRO <b>↗</b></a>
-    </main>
-  );
+    <section className="final"><p className="kicker dark"><b /> YOUR NEXT REP</p><h2>BUILD A BODY.<br /><em>RECLAIM</em> YOUR LIFE.</h2><p>A free intro is a conversation—not a commitment.</p><a className="button dark-button" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">Book your free intro <span>↗</span></a></section>
+    <footer><a className="logo" href="#top"><b>R</b><span>REFINERY</span><i>FITNESS / BUDA</i></a><p>Faith-first, science-backed personal training &amp; health coaching.</p><a href="mailto:jeff@refineryfitness.biz">jeff@refineryfitness.biz</a><small>BUDA · KYLE · HAYS COUNTY · TEXAS</small></footer><a className="mobile-book" href="mailto:jeff@refineryfitness.biz?subject=Free%20Intro%20Session">BOOK FREE INTRO <b>↗</b></a>
+  </main>;
 }
