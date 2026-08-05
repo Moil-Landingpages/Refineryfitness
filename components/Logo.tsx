@@ -13,9 +13,10 @@ const COMPACT_D = "M83.91 49V10.12H94Q97.93 10.12 100.74 11.02Q103.54 11.92 105.
 /** Full lockup from public/logo.svg. Text is outlined, so it never depends on
  *  a webfont; under 760px the tagline drops out via the `.logo-svg` styles. */
 export default function Logo({ height = 38, markBg = "#d8ff51", markFg = "#10100e", accent = "#f35b37", word = "#efede6" }: LogoProps) {
+  // No SVG <title>: the name is announced via aria-label, and an SVG <title>
+  // reads as a duplicate document <title> to some SEO crawlers.
   return (
     <svg className="logo-svg" height={height} viewBox="0 0 265 64" role="img" aria-label="Refinery Fitness of Buda">
-      <title>Refinery Fitness of Buda</title>
       <rect width="64" height="64" fill={markBg} />
       <g fill={markFg}>
         <rect x="16" y="10" width="11" height="44" />

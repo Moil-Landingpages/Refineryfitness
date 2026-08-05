@@ -3,10 +3,10 @@ import { mailto } from "@/lib/site";
 import { ArrowUpRight } from "@/components/icons";
 
 export default function Proof() {
-  return <section className="proof section" id="about">
+  return <section className="proof section" id="about" aria-labelledby="about-heading">
     <div>
       <p className="kicker dark" data-reveal><b /> A DIFFERENT KIND OF COACHING</p>
-      <h2 data-split>YOU’RE NOT<br />BEHIND.<br />YOU’RE <em>HERE.</em></h2>
+      <h2 id="about-heading" data-split>YOU’RE NOT<br />BEHIND.<br />YOU’RE <em>HERE.</em></h2>
     </div>
     <div className="proof-story" data-reveal>
       <p>Refinery Fitness is built for the person tired of fitness culture that demands more than life can give. Jeff Mensing brings a Kinesiology-trained, faith-first approach to strength, health, and confidence—without the noise or the guilt.</p>

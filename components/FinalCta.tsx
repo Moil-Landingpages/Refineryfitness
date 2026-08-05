@@ -16,9 +16,9 @@ export default function FinalCta() {
     window.location.href = mailto("Free Intro Session", body);
   };
 
-  return <section className="final">
+  return <section className="final" aria-labelledby="cta-heading">
     <p className="kicker dark" data-reveal><b /> YOUR NEXT REP</p>
-    <h2 data-split>BUILD A BODY.<br /><em>RECLAIM</em> YOUR LIFE.</h2>
+    <h2 id="cta-heading" data-split>BUILD A BODY.<br /><em>RECLAIM</em> YOUR LIFE.</h2>
     <p data-reveal>A free intro is a conversation—not a commitment.</p>
     <form className="intro-form" data-reveal onSubmit={submit}>
       <label htmlFor="cta-name">Your name</label>

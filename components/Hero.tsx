@@ -11,8 +11,8 @@ const dust = [
 
 export default function Hero() {
   return <header className="hero" id="top">
-    <div className="hero-media" aria-hidden="true">
-      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="" fill priority sizes="100vw" />
+    <div className="hero-media">
+      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="Athlete gripping a loaded barbell in a dark gym, set up for a deadlift" fill priority sizes="100vw" />
     </div>
     <div className="hero-shade" aria-hidden="true" />
     <div className="hero-grid" aria-hidden="true" />

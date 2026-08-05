@@ -9,10 +9,10 @@ const methodMap = [
 ];
 
 export default function Method() {
-  return <section className="intro section" id="method">
+  return <section className="intro section" id="method" aria-labelledby="method-heading">
     <div className="intro-head">
       <p className="kicker dark" data-reveal><b /> THE RPMS METHOD</p>
-      <h2 data-split>THE BODY IS<br />PART OF THE<br /><em>STORY.</em></h2>
+      <h2 id="method-heading" data-split>THE BODY IS<br />PART OF THE<br /><em>STORY.</em></h2>
     </div>
     <div className="intro-copy" data-reveal>
       <p>Most programs ask, <strong>“How hard can you go?”</strong> We start somewhere better: <strong>“What would it look like to become whole?”</strong></p>

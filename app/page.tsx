@@ -9,14 +9,9 @@ import Faq from "@/components/Faq";
 import FinalCta from "@/components/FinalCta";
 import Footer from "@/components/Footer";
 import Motion from "@/components/Motion";
-import { faqs } from "@/lib/faqs";
 import { mailto } from "@/lib/site";
+import { schema } from "@/lib/schema";
 import { ArrowUpRight } from "@/components/icons";
-
-const schema = { "@context": "https://schema.org", "@graph": [
-  { "@type": "HealthClub", name: "Refinery Fitness of Buda", description: "Faith-first, science-backed personal training and health coaching in Buda, Texas.", url: "https://refineryfitness.biz", email: "jeff@refineryfitness.biz", priceRange: "$$", areaServed: ["Buda, TX", "Kyle, TX", "Hays County, TX"], founder: { "@type": "Person", name: "Jeff Mensing", jobTitle: "Personal Trainer & Health Coach" }, sameAs: ["https://www.instagram.com/refineryfitnessofbuda/", "https://www.facebook.com/p/Refinery-Fitness-of-Buda-61576662147080/"] },
-  { "@type": "FAQPage", mainEntity: faqs.map(([name, text]) => ({ "@type": "Question", name, acceptedAnswer: { "@type": "Answer", text } })) }
-] };
 
 export default function Home() {
   return <main>
@@ -24,14 +19,14 @@ export default function Home() {
     <Nav />
     <Hero />
     <section className="marquee" aria-label="Refinery Fitness values">
-      <div>RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> </div>
+      <div>RELATIONAL <i aria-hidden="true">✦</i> PHYSICAL <i aria-hidden="true">✦</i> MENTAL <i aria-hidden="true">✦</i> SPIRITUAL <i aria-hidden="true">✦</i> <span aria-hidden="true">RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> </span></div>
     </section>
     <Method />
-    <VisualBreak src="/images/refinery-coaching.jpg" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
+    <VisualBreak src="/images/refinery-coaching.jpg" alt="Personal trainer coaching a client through a dumbbell lift during a one-on-one strength session" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
     <Programs />
     <CheckIn />
     <Proof />
-    <VisualBreak flip src="/images/refinery-break-2.jpg" tag="REFINERY FITNESS / COACHED, NOT ALONE" quote={<>“Show up willing.<br />Leave <em>stronger.</em>”</>} />
+    <VisualBreak flip src="/images/refinery-break-2.jpg" alt="Personal trainer guiding a client through push-ups in a mobile training session" tag="REFINERY FITNESS / COACHED, NOT ALONE" quote={<>“Show up willing.<br />Leave <em>stronger.</em>”</>} />
     <Faq />
     <FinalCta />
     <Footer />
