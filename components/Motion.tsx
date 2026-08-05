@@ -43,19 +43,33 @@ export default function Motion() {
         if (photo) gsap.fromTo(photo, { yPercent: -6, scale: 1.12 }, { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
       });
 
+      // SplitText's mask wrappers clip to the line box. Our display type runs
+      // line-heights of 0.79–0.94, so caps and descenders sit outside that box
+      // and get sheared off. Grow each mask by PAD and pull it back with a
+      // matching negative margin: the clip window gains headroom, layout does
+      // not move. START_Y then has to clear the taller mask to stay hidden.
+      const PAD = "0.24em";
+      const START_Y = 165;
+      const padMasks = (parts: Element[]) => {
+        const masks = parts.map((p) => p.parentElement).filter((m): m is HTMLElement => !!m);
+        gsap.set(masks, { paddingTop: PAD, paddingBottom: PAD, marginTop: `-${PAD}`, marginBottom: `-${PAD}` });
+      };
+
       // Text effects need final metrics, so split only after fonts are in.
       document.fonts.ready.then(contextSafe!(() => {
         const h1 = new SplitText(".hero h1", { type: "chars", mask: "chars" });
+        padMasks(h1.chars);
         gsap.timeline({ defaults: { ease: "power3.out" } })
           .from(".hero-copy .kicker", { y: 26, autoAlpha: 0, duration: 0.6 }, 0.1)
-          .from(h1.chars, { yPercent: 120, duration: 0.85, stagger: 0.03, ease: "power4.out" }, "-=0.3")
+          .from(h1.chars, { yPercent: START_Y, duration: 0.85, stagger: 0.03, ease: "power4.out" }, "-=0.3")
           .from(".hero-summary", { y: 30, autoAlpha: 0, duration: 0.7 }, "-=0.5")
           .from(".hero-actions", { y: 24, autoAlpha: 0, duration: 0.6 }, "-=0.45")
           .from([".hero-meta", ".hero-scroll"], { autoAlpha: 0, duration: 0.8 }, "-=0.3");
 
         gsap.utils.toArray<HTMLElement>("[data-split]").forEach((el) => {
           const split = new SplitText(el, { type: "words", mask: "words" });
-          gsap.from(split.words, { yPercent: 115, duration: 0.75, stagger: 0.07, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
+          padMasks(split.words);
+          gsap.from(split.words, { yPercent: START_Y, duration: 0.75, stagger: 0.07, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" } });
         });
       }));
     });
