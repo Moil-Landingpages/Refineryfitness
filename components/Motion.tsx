@@ -38,7 +38,10 @@ export default function Motion() {
         gsap.from(group.children, { y: 44, autoAlpha: 0, duration: 0.7, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: group, start: "top 82%" } });
       });
 
-      gsap.fromTo(".photo-coaching", { yPercent: -6, scale: 1.12 }, { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: ".visual-break", start: "top bottom", end: "bottom top", scrub: true } });
+      gsap.utils.toArray<HTMLElement>(".visual-break").forEach((vb) => {
+        const photo = vb.querySelector(".photo-coaching");
+        if (photo) gsap.fromTo(photo, { yPercent: -6, scale: 1.12 }, { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
+      });
 
       // Text effects need final metrics, so split only after fonts are in.
       document.fonts.ready.then(contextSafe!(() => {

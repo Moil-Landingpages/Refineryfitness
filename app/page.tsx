@@ -27,10 +27,11 @@ export default function Home() {
       <div>RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> </div>
     </section>
     <Method />
-    <VisualBreak />
+    <VisualBreak src="/images/refinery-coaching.jpg" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
     <Programs />
     <CheckIn />
     <Proof />
+    <VisualBreak flip src="/images/refinery-break-2.jpg" tag="REFINERY FITNESS / COACHED, NOT ALONE" quote={<>“Show up willing.<br />Leave <em>stronger.</em>”</>} />
     <Faq />
     <FinalCta />
     <Footer />

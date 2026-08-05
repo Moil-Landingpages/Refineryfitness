@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { mailto } from "@/lib/site";
 import { ArrowUpRight } from "@/components/icons";
 
@@ -11,6 +12,9 @@ export default function Proof() {
       <p>Refinery Fitness is built for the person tired of fitness culture that demands more than life can give. Jeff Mensing brings a Kinesiology-trained, faith-first approach to strength, health, and confidence—without the noise or the guilt.</p>
       <p className="proof-note">NO ONE IS TOO FAR GONE.</p>
       <a className="under-link" href={mailto("Meet Jeff")}>Meet Jeff in a free intro <span><ArrowUpRight size={13} /></span></a>
+      <div className="proof-photo" data-reveal>
+        <Image src="/images/refinery-proof.jpg" alt="Two training partners fist-bumping on the gym floor after a hard workout" fill sizes="(max-width: 760px) 100vw, 42vw" />
+      </div>
     </div>
     <div className="result-card" data-reveal>
       <span className="result-tag"><b />REAL PROGRESS,<br />NOT EMPTY PROMISES</span>

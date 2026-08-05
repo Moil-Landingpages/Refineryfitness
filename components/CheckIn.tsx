@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { mailto } from "@/lib/site";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
@@ -18,6 +19,7 @@ export default function CheckIn() {
   const body = `Hi Jeff,\n\nHere is my 90-second check-in:\n${steps.map((s, i) => `• ${s.short}: ${picks[i]}`).join("\n")}\n\nWhat is my best next step?`;
 
   return <section className="assessment">
+    <div className="assessment-bg" aria-hidden="true"><Image src="/images/refinery-chalk.jpg" alt="" fill sizes="100vw" /></div>
     <div className="assessment-copy">
       <p className="kicker" data-reveal><b /> 90-SECOND CHECK-IN</p>
       <h2 data-split>WHAT WOULD<br />MAKE YOU<br /><em>UNSTOPPABLE?</em></h2>

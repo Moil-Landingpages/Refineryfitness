@@ -1,7 +1,4 @@
-"use client";
-
 import Image from "next/image";
-import { useState } from "react";
 import { mailto } from "@/lib/site";
 import { ArrowDown, ArrowUpRight } from "@/components/icons";
 
@@ -13,11 +10,9 @@ const dust = [
 ];
 
 export default function Hero() {
-  const [videoOk, setVideoOk] = useState(true);
   return <header className="hero" id="top">
     <div className="hero-media" aria-hidden="true">
-      <Image className="hero-img" src="/images/refinery-hero.png" alt="" fill priority sizes="100vw" />
-      {videoOk && <video className="hero-video" src="/videos/hero-loop.mp4" poster="/images/refinery-hero.png" autoPlay muted loop playsInline preload="metadata" tabIndex={-1} onError={() => setVideoOk(false)} />}
+      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="" fill priority sizes="100vw" />
     </div>
     <div className="hero-shade" aria-hidden="true" />
     <div className="hero-grid" aria-hidden="true" />
