@@ -6,6 +6,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Row,
@@ -22,12 +23,20 @@ import {
  *
  * Two constraints shape the markup. Mail clients ignore linked stylesheets and
  * much of the cascade, so every family, colour and size is an inline style on a
- * table rather than something inherited. And no remote images: Outlook and
- * Gmail block them until the reader opts in, so the lime rule and the monogram
- * are drawn in CSS and always render.
+ * table rather than something inherited. And Outlook and Gmail block remote
+ * images until the reader opts in, so the accent rule is drawn in CSS and the
+ * logo carries alt text with the gym name set as live text beside it.
  */
 
-const SITE = "https://refineryfitness.biz";
+/**
+ * Where the logo is fetched from.
+ *
+ * Mail clients cannot read the app's `public/` folder — they issue a plain HTTP
+ * request from the reader's machine — so the mark needs a publicly reachable
+ * absolute URL. Override with `SITE_URL` to point at a staging deploy; the
+ * default is the live domain.
+ */
+const SITE = (process.env.SITE_URL || "https://refineryfitness.biz").replace(/\/+$/, "");
 
 /** Brand tokens, mirroring `--ink`/`--cream`/`--lime`/`--orange` in globals.css. */
 const c = {
@@ -73,12 +82,14 @@ export function EnquiryEmail({ kind, name, email, message, answers, submittedAt 
           {/* Masthead — the ink nav bar from the top of the site. */}
           <Section style={{ backgroundColor: c.ink, padding: "26px 30px 24px", marginTop: "28px" }}>
             <Row>
-              <Column style={{ width: "54px", verticalAlign: "middle" }}>
-                <Section style={{ width: "42px", height: "42px", border: `2px solid ${accent}`, textAlign: "center" as const }}>
-                  <Text style={{ margin: 0, lineHeight: "38px", fontFamily: display, fontSize: "19px", fontWeight: 600, color: accent }}>
-                    RF
-                  </Text>
-                </Section>
+              <Column style={{ width: "58px", verticalAlign: "middle" }}>
+                <Img
+                  src={`${SITE}/logo-512.png`}
+                  width="46"
+                  height="46"
+                  alt="Refinery Fitness"
+                  style={{ display: "block", border: 0, outline: "none", textDecoration: "none" }}
+                />
               </Column>
               <Column style={{ verticalAlign: "middle" }}>
                 <Text
