@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { mailto } from "@/lib/site";
+import { BookButton } from "@/components/Booking";
 import { ArrowDown, ArrowUpRight } from "@/components/icons";
 
 const dust = [
@@ -12,7 +12,7 @@ const dust = [
 export default function Hero() {
   return <header className="hero" id="top">
     <div className="hero-media">
-      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="Athlete gripping a loaded barbell in a dark gym, set up for a deadlift" fill priority sizes="100vw" />
+      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="Jeff Mensing and four clients flexing together in front of the gym mural in Buda, Texas" fill priority sizes="100vw" />
     </div>
     <div className="hero-shade" aria-hidden="true" />
     <div className="hero-grid" aria-hidden="true" />
@@ -23,7 +23,7 @@ export default function Hero() {
       <h1>MORE THAN<br /><strong>MOTION.</strong></h1>
       <p className="hero-summary">Science-backed coaching for people who are ready to become strong enough for the life they are called to live.</p>
       <div className="hero-actions">
-        <a className="button lime" href={mailto("Free Intro Session")}>Book your free intro <span><ArrowUpRight /></span></a>
+        <BookButton className="button lime" topic="Free intro session">Book your free intro <span><ArrowUpRight /></span></BookButton>
         <a className="watch" href="#method"><i><ArrowDown size={13} /></i> See what makes this different</a>
       </div>
     </div>

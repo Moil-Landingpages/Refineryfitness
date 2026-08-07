@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { mailto } from "@/lib/site";
+import { useBooking } from "@/components/Booking";
 import { programs } from "@/lib/programs";
 import { ArrowUpRight } from "@/components/icons";
 
 export default function Programs() {
   const [active, setActive] = useState(0);
+  const { open } = useBooking();
   return <section className="programs section" id="programs" aria-labelledby="programs-heading">
     <div className="program-title">
       <p className="kicker dark" data-reveal><b /> FIND YOUR START</p>
@@ -25,7 +26,7 @@ export default function Programs() {
           <h3>{program.name}</h3>
           <p className="program-line">{program.line}</p>
           <p className="program-copy">{program.copy}</p>
-          <a className="button orange" href={mailto(program.action)}>{program.action} <span><ArrowUpRight /></span></a>
+          <button type="button" className="button orange" onClick={() => open(program.name)}>{program.action} <span><ArrowUpRight /></span></button>
         </div>
         <ul>{program.includes.map((item) => <li key={item}><b>+</b>{item}</li>)}</ul>
         <div className="program-index">0{index + 1}<i>/</i>03</div>

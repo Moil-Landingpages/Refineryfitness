@@ -1,20 +1,38 @@
 import { render } from "@react-email/render";
 import { EnquiryEmail, type EnquiryEmailProps } from "@/emails/enquiry";
 import { CHECK_IN_STEPS } from "@/lib/check-in";
+import { CONSULTATION_FORMATS, CONSULTATION_TOPICS, DEFAULT_TOPIC, LIMITS } from "@/lib/consultation";
 import { EmailGatewayError, readGatewayConfig, sendViaGateway } from "@/lib/email-gateway";
 
 /**
- * Receives both website forms — the free-intro request and the 90-second
- * check-in — and hands them to the email gateway.
+ * Receives every website form — the free-intro request, the 90-second check-in,
+ * and the consultation booking behind the "book" buttons — and hands them to
+ * the email gateway.
  *
  * The status codes matter to the forms: 503 means "nothing is configured", and
  * 502 means "configured but the gateway refused". Both tell the browser to fall
  * back to opening a prefilled mail client, so an enquiry is never silently lost.
  */
 
-type Payload = { kind?: unknown; name?: unknown; email?: unknown; message?: unknown; picks?: unknown };
+type Payload = {
+  kind?: unknown;
+  name?: unknown;
+  email?: unknown;
+  message?: unknown;
+  picks?: unknown;
+  phone?: unknown;
+  topic?: unknown;
+  format?: unknown;
+};
 
-const asText = (value: unknown) => (typeof value === "string" ? value.trim() : "");
+const asText = (value: unknown, max = 500) =>
+  typeof value === "string" ? value.trim().slice(0, max) : "";
+
+/** Keeps a value only when it is one the site actually offers. */
+const oneOf = (value: unknown, allowed: readonly string[]) => {
+  const text = asText(value, 120);
+  return allowed.includes(text) ? text : "";
+};
 
 /**
  * Rebuilds the check-in from the choices the browser reported, rejecting
@@ -37,10 +55,11 @@ export async function POST(request: Request) {
     return Response.json({ error: "Malformed request body." }, { status: 400 });
   }
 
-  const kind = payload.kind === "check-in" ? "check-in" : "intro";
-  const name = asText(payload.name);
-  const email = asText(payload.email);
-  const message = asText(payload.message);
+  const kind =
+    payload.kind === "check-in" ? "check-in" : payload.kind === "consultation" ? "consultation" : "intro";
+  const name = asText(payload.name, LIMITS.name);
+  const email = asText(payload.email, LIMITS.email);
+  const message = asText(payload.message, LIMITS.message);
 
   if (!name) return Response.json({ error: "A name is required." }, { status: 422 });
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -53,6 +72,10 @@ export async function POST(request: Request) {
     if (!parsed) return Response.json({ error: "Please answer all three questions." }, { status: 422 });
     answers = parsed;
   }
+
+  const phone = kind === "consultation" ? asText(payload.phone, LIMITS.phone) : "";
+  const topic = kind === "consultation" ? oneOf(payload.topic, CONSULTATION_TOPICS) || DEFAULT_TOPIC : "";
+  const format = kind === "consultation" ? oneOf(payload.format, CONSULTATION_FORMATS) : "";
 
   const settings = readGatewayConfig();
   if ("missing" in settings) {
@@ -70,15 +93,28 @@ export async function POST(request: Request) {
     timeZone: "America/Chicago",
   }).format(new Date());
 
-  const email_ = EnquiryEmail({ kind, name, email, message: message || undefined, answers, submittedAt });
+  const email_ = EnquiryEmail({
+    kind,
+    name,
+    email,
+    message: message || undefined,
+    answers,
+    phone: phone || undefined,
+    topic: topic || undefined,
+    format: format || undefined,
+    submittedAt,
+  });
   const [html, text] = await Promise.all([render(email_), render(email_, { plainText: true })]);
 
+  const subject =
+    kind === "check-in"
+      ? `Check-in from ${name}`
+      : kind === "consultation"
+        ? `Consultation request — ${name} (${topic})`
+        : `Free intro request — ${name}`;
+
   try {
-    const id = await sendViaGateway(settings.config, {
-      subject: kind === "check-in" ? `Check-in from ${name}` : `Free intro request — ${name}`,
-      html,
-      text,
-    });
+    const id = await sendViaGateway(settings.config, { subject, html, text });
     return Response.json({ ok: true, id });
   } catch (error) {
     console.error("[enquiry] gateway send failed:", error instanceof EmailGatewayError ? error.message : error);

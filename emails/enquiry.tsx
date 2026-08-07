@@ -15,8 +15,9 @@ import {
 } from "@react-email/components";
 
 /**
- * A website enquiry as it lands in Jeff's inbox — either a free-intro request
- * or a completed 90-second check-in, which differ only in what they carry.
+ * A website enquiry as it lands in Jeff's inbox — a free-intro request, a
+ * completed 90-second check-in, or a consultation booked from one of the site's
+ * "book" buttons. They differ only in what they carry.
  *
  * Preview it while editing with `pnpm email` — the react-email dev server
  * renders every file in this folder, using the `PreviewProps` at the bottom.
@@ -57,21 +58,44 @@ const mono = '"DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monosp
 
 export type EnquiryEmailProps = {
   /** Which form this came from — they read very differently and are triaged differently. */
-  kind: "intro" | "check-in";
+  kind: "intro" | "check-in" | "consultation";
   name: string;
   email: string;
-  /** Free-intro requests only. */
+  /** Free-intro and consultation requests. */
   message?: string;
   /** Check-ins only: the three questions and what was picked. */
   answers?: { question: string; answer: string }[];
+  /** Consultations only — the visitor may leave the phone number blank. */
+  phone?: string;
+  /** Consultations only: which button they came in through. */
+  topic?: string;
+  /** Consultations only: in person, mobile, or virtual. */
+  format?: string;
   /** Already formatted in gym time by the caller. */
   submittedAt: string;
 };
 
-export function EnquiryEmail({ kind, name, email, message, answers, submittedAt }: EnquiryEmailProps) {
-  const isIntro = kind === "intro";
-  const accent = isIntro ? c.lime : c.orange;
-  const eyebrow = isIntro ? "Free intro request" : "90-second check-in";
+export function EnquiryEmail({
+  kind,
+  name,
+  email,
+  message,
+  answers,
+  phone,
+  topic,
+  format,
+  submittedAt,
+}: EnquiryEmailProps) {
+  const isCheckIn = kind === "check-in";
+  const accent = isCheckIn ? c.orange : c.lime;
+  const eyebrow =
+    kind === "check-in" ? "90-second check-in" : kind === "consultation" ? "Consultation request" : "Free intro request";
+  const lede =
+    kind === "check-in"
+      ? "worked through the check-in and is ready for a next step."
+      : kind === "consultation"
+        ? `asked to book a consultation${topic ? ` about ${topic.toLowerCase()}` : ""}.`
+        : "wants to book a free intro session.";
 
   return (
     <Html lang="en">
@@ -134,9 +158,7 @@ export function EnquiryEmail({ kind, name, email, message, answers, submittedAt 
               {name}
             </Heading>
             <Text style={{ margin: "14px 0 0", fontFamily: sans, fontSize: "15px", lineHeight: 1.6, color: c.muted }}>
-              {isIntro
-                ? "wants to book a free intro session."
-                : "worked through the check-in and is ready for a next step."}
+              {lede}
             </Text>
 
             {/* Reply path, kept above the detail so it never needs hunting for. */}
@@ -145,7 +167,26 @@ export function EnquiryEmail({ kind, name, email, message, answers, submittedAt 
               <Link href={`mailto:${email}`} style={{ ...valueStyle, fontSize: "18px", color: c.ink, textDecoration: "underline" }}>
                 {email}
               </Link>
+              {phone ? (
+                <>
+                  <Text style={{ ...labelStyle, marginTop: "14px" }}>Or call</Text>
+                  <Link href={`tel:${phone.replace(/[^\d+]/g, "")}`} style={{ ...valueStyle, color: c.ink, textDecoration: "underline" }}>
+                    {phone}
+                  </Link>
+                </>
+              ) : null}
             </Section>
+
+            {topic || format ? (
+              <Section style={{ paddingTop: "26px" }}>
+                <Text style={{ ...labelStyle, color: c.dim }}>What they asked about</Text>
+                <Hr style={{ margin: "6px 0 0", border: "none", borderTop: `1px solid ${c.line}` }} />
+                {topic ? <Text style={{ ...valueStyle, fontWeight: 600, marginTop: "12px" }}>{topic}</Text> : null}
+                {format ? (
+                  <Text style={{ ...valueStyle, fontSize: "14px", color: c.muted }}>Prefers to train: {format}</Text>
+                ) : null}
+              </Section>
+            ) : null}
 
             {message ? (
               <Section style={{ paddingTop: "26px" }}>

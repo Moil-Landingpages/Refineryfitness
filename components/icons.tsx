@@ -25,3 +25,7 @@ export const Plus = ({ size = 15 }: IconProps) => (
 export const Minus = ({ size = 15 }: IconProps) => (
   <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M5 12h14" /></svg>
 );
+
+export const Close = ({ size = 15 }: IconProps) => (
+  <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>
+);

@@ -54,6 +54,7 @@ export const schema = {
       name: "Jeff Mensing",
       jobTitle: "Personal Trainer & Health Coach",
       description: "Kinesiology-trained personal trainer bringing a faith-first, science-backed approach to strength, health, and confidence.",
+      image: { "@type": "ImageObject", url: `${SITE_URL}/images/refinery-jeff.jpg` },
       worksFor: { "@id": BUSINESS },
       knowsAbout: ["Kinesiology", "Strength training", "Health coaching"],
     },
