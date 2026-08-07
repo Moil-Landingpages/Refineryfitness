@@ -23,8 +23,8 @@ const methodMap = [
     letter: "P",
     title: "Physical",
     copy: "Strength and nutrition with a clear why.",
-    src: "/images/refinery-rpms-physical.jpg",
-    alt: "Jeff Mensing driving through a preacher curl in a Refinery Fitness cap",
+    src: "/images/refinery-cable-work.jpg",
+    alt: "A client pulling through a cable crossover rep on the gym floor",
   },
   {
     letter: "M",

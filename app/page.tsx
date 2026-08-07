@@ -24,7 +24,7 @@ export default function Home() {
         <div>RELATIONAL <i aria-hidden="true">✦</i> PHYSICAL <i aria-hidden="true">✦</i> MENTAL <i aria-hidden="true">✦</i> SPIRITUAL <i aria-hidden="true">✦</i> <span aria-hidden="true">RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> </span></div>
       </section>
       <Method />
-      <VisualBreak src="/images/refinery-mobile-training.jpg" alt="A client working through a dumbbell lateral raise in an open garage gym" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
+      <VisualBreak src="/images/refinery-gym-floor.jpg" alt="Clients training across the gym floor during a group session" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
       <Programs />
       <CheckIn />
       <About />

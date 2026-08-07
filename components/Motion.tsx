@@ -40,7 +40,10 @@ export default function Motion() {
 
       gsap.utils.toArray<HTMLElement>(".visual-break").forEach((vb) => {
         const photo = vb.querySelector(".photo-coaching");
-        if (photo) gsap.fromTo(photo, { yPercent: -6, scale: 1.12 }, { yPercent: 6, scale: 1.12, ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
+        // Scale-only push-in anchored to the top edge: any vertical translate
+        // hides the top of the photo at some scroll position, and that's where
+        // the faces are. With origin at top the bleed all goes to the bottom.
+        if (photo) gsap.fromTo(photo, { scale: 1, transformOrigin: "50% 0%" }, { scale: 1.1, transformOrigin: "50% 0%", ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
       });
 
       // SplitText's mask wrappers clip to the line box. Our display type runs
