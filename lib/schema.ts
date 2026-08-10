@@ -74,7 +74,7 @@ export const schema = {
       description: "Faith-first, science-backed personal training and health coaching in Buda, Kyle, and Hays County.",
       isPartOf: { "@id": WEBSITE },
       about: { "@id": BUSINESS },
-      primaryImageOfPage: { "@type": "ImageObject", url: `${SITE_URL}/images/refinery-hero.jpg` },
+      primaryImageOfPage: { "@type": "ImageObject", url: `${SITE_URL}/images/refinery-hero-cable.jpg` },
       inLanguage: "en-US",
       mainEntity: faqs.map(([name, text]) => ({
         "@type": "Question",

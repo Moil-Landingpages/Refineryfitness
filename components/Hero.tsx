@@ -12,7 +12,7 @@ const dust = [
 export default function Hero() {
   return <header className="hero" id="top">
     <div className="hero-media">
-      <Image className="hero-img" src="/images/refinery-hero.jpg" alt="Jeff Mensing and four clients flexing together in front of the gym mural in Buda, Texas" fill priority sizes="100vw" />
+      <Image className="hero-img" src="/images/refinery-hero-cable.jpg" alt="An athlete pulling a cable handle across his body under dramatic studio light" fill priority sizes="100vw" />
     </div>
     <div className="hero-shade" aria-hidden="true" />
     <div className="hero-grid" aria-hidden="true" />

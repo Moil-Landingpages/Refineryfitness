@@ -16,7 +16,9 @@ export default function Motion() {
 
       // Ambient hero: continuous slow zoom + drifting chalk-dust field, so the
       // hero feels alive even while the video file doesn't exist.
-      gsap.fromTo(".hero-media", { scale: 1.12 }, { scale: 1.03, duration: 16, ease: "sine.inOut", repeat: -1, yoyo: true });
+      // Origin at the top edge: the hero subject's face sits at the very top
+      // of the frame, so the zoom must bleed downward, never crop the top.
+      gsap.fromTo(".hero-media", { scale: 1.05, transformOrigin: "50% 0%" }, { scale: 1, transformOrigin: "50% 0%", duration: 16, ease: "sine.inOut", repeat: -1, yoyo: true });
       gsap.utils.toArray<HTMLElement>(".dust span").forEach((d) => {
         gsap.to(d, {
           x: () => gsap.utils.random(-80, 80),
