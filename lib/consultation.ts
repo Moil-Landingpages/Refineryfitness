@@ -1,3 +1,4 @@
+import { pillars } from "@/lib/method";
 import { programs } from "@/lib/programs";
 
 /**
@@ -16,6 +17,9 @@ export const DEFAULT_TOPIC = "Free intro session";
 export const CONSULTATION_TOPICS: readonly string[] = [
   DEFAULT_TOPIC,
   "The RPMS Method",
+  // Asking from a turned-over pillar tells Jeff which of the four brought them
+  // in, so each has to survive the allowlist on its own.
+  ...pillars.map((pillar) => `The RPMS Method — ${pillar.title}`),
   ...programs.map((program) => program.name),
   "Meet Jeff",
 ];

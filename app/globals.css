@@ -106,3 +106,95 @@ button.under-link{border:0;border-bottom:1px solid currentColor;background:none;
 .pb-0 {
     padding-bottom: 0 !important;
 }
+/* ---- values band ----------------------------------------------------------
+   Two identical halves in a max-content track, so -50% lands exactly one half
+   along. Duration comes from the component, scaled to the repeat count. */
+/* Scoped through .marquee so these beat the legacy `.marquee div` rule, which
+   is (0,1,1) and would otherwise keep the track inline-block — that left the
+   two halves stacked as separate lines instead of running as one row. */
+.marquee .marquee-track{display:flex;width:max-content;animation:marquee linear infinite}
+.marquee .marquee-track>div{display:flex;animation:none;
+  font:600 24px var(--display);letter-spacing:.04em}
+.marquee .marquee-track span{display:inline;white-space:pre}
+.marquee .marquee-track i{font:normal 13px var(--mono);margin:0 15px}
+
+/* ---- RPMS cards, turning over --------------------------------------------
+   Faces are stacked in one grid cell rather than absolutely positioned, so the
+   card takes the height of its taller side instead of clipping the back. */
+/* Two classes, because `.method-map article` already sets padding and would
+   otherwise win on specificity. Borders stay with the existing article rules. */
+.method-map .pillar{position:relative;perspective:1500px;padding:0}
+.pillar-inner{display:grid;transform-style:preserve-3d;
+            transition:transform .58s cubic-bezier(.22,.7,.2,1)}
+.pillar[data-open="true"] .pillar-inner{transform:rotateY(180deg)}
+.pillar-face{grid-area:1/1;position:relative;backface-visibility:hidden;
+           display:flex;flex-direction:column;padding:22px 25px 44px;
+           /* Hidden faces leave the tab order, but only at the halfway point,
+              so the outgoing side does not vanish mid-turn. */
+           visibility:hidden;transition:visibility 0s linear .29s}
+.pillar[data-open="false"] .pillar-face:not(.pillar-back),
+.pillar[data-open="true"] .pillar-back{visibility:visible;transition-delay:0s}
+.pillar-back{transform:rotateY(180deg);background:var(--ink);color:var(--cream)}
+
+.pillar .method-photo{margin:0 -25px 18px}
+.pillar-face h3{font-size:29px;margin:0 0 6px}
+.pillar-face p{font-size:13px;color:#5d5b54;line-height:1.6;margin:0;max-width:190px}
+.pillar-face i{position:absolute;bottom:17px;right:20px;font:10px var(--mono);color:var(--dim)}
+
+/* Each face's own button; its ::after stretches the hit area over the face. */
+.pillar-open,.pillar-close{border:0;background:none;padding:0;margin-top:auto;
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  font:500 10px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:#5d5b54;transition:color .2s}
+.pillar-open::after,.pillar-close::after{content:"";position:absolute;inset:0}
+.pillar-open em,.pillar-close em{font-style:normal;border-bottom:1px solid currentColor;padding-bottom:4px}
+.pillar:hover .pillar-open{color:var(--orange)}
+.pillar:hover .method-photo img{transform:scale(1.04)}
+.method-photo img{transition:transform .5s ease}
+.pillar-open:focus-visible,.pillar-close:focus-visible{outline:none}
+.pillar-face:has(.pillar-open:focus-visible),
+.pillar-face:has(.pillar-close:focus-visible){outline:2px solid var(--orange);outline-offset:-2px}
+
+.pillar-back h3{color:var(--lime)}
+.pillar-back p{color:#b8b5aa;font-size:12.5px;line-height:1.62;max-width:none;margin-bottom:9px}
+.pillar-back ul{list-style:none;margin:14px 0 0;padding:0;font-size:11.5px;line-height:1.4}
+.pillar-back li{padding:7px 0;border-top:1px solid #34332c;display:flex;gap:8px;color:#cdcabf}
+.pillar-back li b{color:var(--lime);font-weight:400}
+.pillar-actions{margin-top:auto;padding-top:18px;display:flex;flex-direction:column;
+              align-items:flex-start;gap:12px}
+/* Sits above the close button's stretched hit area. */
+.pillar-cta{position:relative;z-index:1;border:0;background:var(--lime);color:var(--ink);
+  padding:11px 13px;display:inline-flex;align-items:center;gap:12px;
+  font:500 9px var(--mono);letter-spacing:.08em;text-transform:uppercase;transition:transform .2s}
+.pillar-cta:hover{transform:translateY(-2px)}
+.pillar-close{margin-top:0;color:#8b887d}
+.pillar-back:hover .pillar-close{color:var(--lime)}
+
+/* ---- footer socials -------------------------------------------------------- */
+footer{grid-template-columns:1.15fr 1.7fr 1.05fr auto}
+.socials{list-style:none;display:flex;gap:9px;padding:0;margin:0}
+.socials a{display:inline-flex;align-items:center;gap:8px;border:1px solid #45443e;
+  padding:9px 12px;font:500 9px var(--mono);letter-spacing:.1em;text-transform:uppercase;
+  color:#aaa79e;transition:border-color .2s,color .2s}
+.socials a:hover{border-color:var(--lime);color:var(--lime)}
+
+@media(max-width:760px){
+.marquee .marquee-track>div{font-size:20px}
+.pillar-face{padding:15px 14px 38px}
+.pillar .method-photo{margin:0 -14px 14px}
+.pillar-face h3{font-size:21px;margin-bottom:4px}
+.pillar-face p{font-size:12px;max-width:none}
+.pillar-face i{bottom:13px;right:14px}
+.socials{margin-bottom:0!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+/* No rotation: the back cross-fades into place instead. */
+.marquee .marquee-track{animation:none}
+.method-photo img{transition:none}
+.pillar-inner{transition:none}
+.pillar[data-open="true"] .pillar-inner{transform:none}
+.pillar-back{transform:none;opacity:0;transition:opacity .2s}
+.pillar[data-open="true"] .pillar-back{opacity:1}
+.pillar[data-open="true"] .pillar-face:not(.pillar-back){opacity:0}
+}

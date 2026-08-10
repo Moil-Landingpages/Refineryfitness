@@ -29,7 +29,7 @@ export default function Programs() {
           <button type="button" className="button orange" onClick={() => open(program.name)}>{program.action} <span><ArrowUpRight /></span></button>
         </div>
         <ul>{program.includes.map((item) => <li key={item}><b>+</b>{item}</li>)}</ul>
-        <div className="program-index">0{index + 1}<i>/</i>03</div>
+        <div className="program-index">0{index + 1}<i>/</i>0{programs.length}</div>
       </div>)}
     </div>
   </section>;

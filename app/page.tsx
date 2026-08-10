@@ -1,5 +1,6 @@
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
+import Marquee from "@/components/Marquee";
 import Method from "@/components/Method";
 import VisualBreak from "@/components/VisualBreak";
 import Programs from "@/components/Programs";
@@ -20,11 +21,9 @@ export default function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <Nav />
       <Hero />
-      <section className="marquee" aria-label="Refinery Fitness values">
-        <div>RELATIONAL <i aria-hidden="true">✦</i> PHYSICAL <i aria-hidden="true">✦</i> MENTAL <i aria-hidden="true">✦</i> SPIRITUAL <i aria-hidden="true">✦</i> <span aria-hidden="true">RELATIONAL <i>✦</i> PHYSICAL <i>✦</i> MENTAL <i>✦</i> SPIRITUAL <i>✦</i> </span></div>
-      </section>
+      <Marquee />
       <Method />
-      <VisualBreak src="/images/refinery-team.jpg" alt="Jeff Mensing and four clients flexing together in front of the gym mural in Buda, Texas" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
+      <VisualBreak src="/images/refinery-coaching-garage.jpg" alt="Jeff Mensing spotting a young client through a lat pulldown in his garage gym" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
       <Programs />
       <CheckIn />
       <About />

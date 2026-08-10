@@ -1,6 +1,6 @@
 import { faqs } from "@/lib/faqs";
 import { programs } from "@/lib/programs";
-import { EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
+import { EMAIL, SITE_NAME, SITE_URL, SOCIALS } from "@/lib/site";
 
 const BUSINESS = `${SITE_URL}/#business`;
 const WEBSITE = `${SITE_URL}/#website`;
@@ -35,10 +35,7 @@ export const schema = {
       knowsAbout: ["Personal training", "Strength training", "Health coaching", "Habit coaching", "Nutrition coaching", "Faith-based wellness"],
       founder: { "@id": FOUNDER },
       employee: { "@id": FOUNDER },
-      sameAs: [
-        "https://www.instagram.com/refineryfitnessofbuda/",
-        "https://www.facebook.com/p/Refinery-Fitness-of-Buda-61576662147080/",
-      ],
+      sameAs: SOCIALS.map((social) => social.url),
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Training programs",
