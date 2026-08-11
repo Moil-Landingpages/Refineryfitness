@@ -23,12 +23,33 @@ export default function Home() {
       <Hero />
       <Marquee />
       <Method />
-      <VisualBreak src="/images/refinery-coaching-garage.jpg" alt="Jeff Mensing spotting a young client through a lat pulldown in his garage gym" tag="REFINERY FITNESS / THE WHOLE PERSON" quote={<>“The work is physical.<br />The <em>change</em> is bigger.”</>} />
+      {/* The two breaks mirror each other; index follows their order down the page. */}
+      <VisualBreak
+        index="02"
+        colour
+        src="/images/refinery-coaching-garage.jpg"
+        // Sits above centre so Jeff's head stays in frame, not just the lift.
+        focus="center 25%"
+        alt="Jeff Mensing spotting a young client through a lat pulldown in his garage gym"
+        quote={<>The work is physical.<br />The <em>change</em> is bigger.</>}
+        body="Strength isn’t just in the weights. It’s in the mindset, the habits, and the choices you make every day."
+        label="The whole person"
+        icon="person"
+      />
       <Programs />
       <CheckIn />
       <About />
       <Proof />
-      <VisualBreak flip src="/images/refinery-coached.jpg" alt="A client pulling down on a lat bar while his coach watches the lift in the mirror" tag="REFINERY FITNESS / COACHED, NOT ALONE" quote={<>“Show up willing.<br />Leave <em>stronger.</em>”</>} />
+      <VisualBreak
+        flip
+        index="07"
+        src="/images/refinery-coached.jpg"
+        alt="A client pulling down on a lat bar while his coach watches the lift in the mirror"
+        quote={<>Show up willing.<br />Leave <em>stronger.</em></>}
+        body="We meet you where you are and build you into who you’re meant to be."
+        label="Coached, not alone"
+        icon="dumbbell"
+      />
       <Faq />
       <FinalCta />
       <Footer />

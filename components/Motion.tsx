@@ -41,11 +41,31 @@ export default function Motion() {
       });
 
       gsap.utils.toArray<HTMLElement>(".visual-break").forEach((vb) => {
-        const photo = vb.querySelector(".photo-coaching");
-        // Scale-only push-in anchored to the top edge: any vertical translate
-        // hides the top of the photo at some scroll position, and that's where
-        // the faces are. With origin at top the bleed all goes to the bottom.
-        if (photo) gsap.fromTo(photo, { scale: 1, transformOrigin: "50% 0%" }, { scale: 1.1, transformOrigin: "50% 0%", ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
+        // The image, not its wrapper: the wrapper carries the panel's clip-path,
+        // and scaling that would scale the slanted edge out past the frame.
+        const photo = vb.querySelector(".photo-coaching img");
+        // Scale-only push-in, centred now that the photo sits in a plate cut to
+        // its own proportions rather than bleeding across the band. Kept shallow
+        // (1.04) because the frame no longer has crop to spare — a deeper push
+        // is what made these read as zoomed right into the subject.
+        if (photo) gsap.fromTo(photo, { scale: 1, transformOrigin: "50% 50%" }, { scale: 1.04, transformOrigin: "50% 50%", ease: "none", scrollTrigger: { trigger: vb, start: "top bottom", end: "bottom top", scrub: true } });
+      });
+
+      // One baton down the page. Every section's rail marker travels its track
+      // in step with that section passing through the viewport, so the eye is
+      // handed from one section to the next instead of meeting eight separate
+      // static marks. Measured in a function so a resize re-reads the track.
+      gsap.utils.toArray<HTMLElement>(".sec-rail, .vb-rail").forEach((rail) => {
+        const mark = rail.querySelector<HTMLElement>(".rail-mark");
+        const section = rail.closest("section");
+        if (!mark || !section) return;
+        gsap.fromTo(mark,
+          { y: 0 },
+          {
+            y: () => rail.clientHeight - mark.offsetHeight,
+            ease: "none",
+            scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 0.6, invalidateOnRefresh: true },
+          });
       });
 
       // SplitText's mask wrappers clip to the line box. Our display type runs

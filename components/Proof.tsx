@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BookButton } from "@/components/Booking";
 import { ArrowUpRight } from "@/components/icons";
+import SectionMark from "@/components/SectionMark";
 
 /**
  * Who the coaching is for, and one documented result.
@@ -15,9 +16,11 @@ import { ArrowUpRight } from "@/components/icons";
  */
 export default function Proof() {
   return <section className="proof section" id="proof" aria-labelledby="proof-heading">
+    <SectionMark index="06" side="right" />
     <div className="proof-head">
       <p className="kicker dark" data-reveal><b /> A DIFFERENT KIND OF COACHING</p>
       <h2 id="proof-heading" data-split>YOU’RE NOT<br />BEHIND.<br />YOU’RE <em>HERE.</em></h2>
+      <span className="sec-rule" aria-hidden="true" />
     </div>
 
     <div className="proof-story" data-reveal>

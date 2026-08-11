@@ -4,14 +4,17 @@ import { useState } from "react";
 import { useBooking } from "@/components/Booking";
 import { programs } from "@/lib/programs";
 import { ArrowUpRight } from "@/components/icons";
+import SectionMark from "@/components/SectionMark";
 
 export default function Programs() {
   const [active, setActive] = useState(0);
   const { open } = useBooking();
   return <section className="programs section" id="programs" aria-labelledby="programs-heading">
+    <SectionMark index="03" side="left" />
     <div className="program-title">
       <p className="kicker dark" data-reveal><b /> FIND YOUR START</p>
       <h2 id="programs-heading" data-split>DON’T JUST<br />START.<br /><em>STAY WITH IT.</em></h2>
+      <span className="sec-rule" aria-hidden="true" />
       <p data-reveal>A pathway for your schedule. A system for your life.</p>
     </div>
     <div className="program-console" data-reveal>

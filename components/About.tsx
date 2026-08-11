@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { BookButton } from "@/components/Booking";
 import { ArrowUpRight } from "@/components/icons";
+import SectionMark from "@/components/SectionMark";
 
 /**
  * Who Jeff is, and why the training is shaped the way it is.
@@ -20,9 +21,11 @@ const facts = [
 
 export default function About() {
   return <section className="about section pb-0" id="about" aria-labelledby="about-heading">
+    <SectionMark index="05" side="left" />
     <div className="about-head">
       <p className="kicker dark" data-reveal><b /> MEET JEFF MENSING</p>
       <h2 id="about-heading" data-split>TRAINED IN<br />THE SCIENCE.<br />ANCHORED IN<br /><em>SOMETHING MORE.</em></h2>
+      <span className="sec-rule" aria-hidden="true" />
     </div>
 
     <div className="about-portrait" data-reveal>

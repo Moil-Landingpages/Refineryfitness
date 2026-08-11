@@ -5,6 +5,7 @@ import { useState } from "react";
 import { mailto } from "@/lib/site";
 import { CHECK_IN_STEPS as steps } from "@/lib/check-in";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "@/components/icons";
+import SectionMark from "@/components/SectionMark";
 
 /**
  * The 90-second check-in.
@@ -58,10 +59,12 @@ export default function CheckIn() {
   };
 
   return <section className="assessment" aria-labelledby="checkin-heading">
+    <SectionMark index="04" side="right" tone="dark" />
     <div className="assessment-bg" aria-hidden="true"><Image src="/images/refinery-mobile-training.jpg" alt="" fill sizes="100vw" /></div>
     <div className="assessment-copy">
       <p className="kicker" data-reveal><b /> 90-SECOND CHECK-IN</p>
       <h2 id="checkin-heading" data-split>WHAT WOULD<br />MAKE YOU<br /><em>UNSTOPPABLE?</em></h2>
+      <span className="sec-rule" aria-hidden="true" />
       <p data-reveal>There is no perfect plan. There is a next right step. Find yours.</p>
     </div>
     <div className="check-in" data-reveal>

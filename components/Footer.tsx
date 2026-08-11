@@ -19,6 +19,11 @@ export default function Footer() {
         </li>;
       })}
     </ul>
-    <small>BUDA · KYLE · HAYS COUNTY · TEXAS</small>
+    <small>
+      <span>BUDA · KYLE · HAYS COUNTY · TEXAS</span>
+      <a className="built-with" href="https://moilapp.com" target="_blank" rel="noopener noreferrer">
+        Built with <b>Moil</b>
+      </a>
+    </small>
   </footer>;
 }
