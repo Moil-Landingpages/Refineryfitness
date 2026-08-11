@@ -14,10 +14,12 @@ import Motion from "@/components/Motion";
 import { BookButton, BookingProvider } from "@/components/Booking";
 import { schema } from "@/lib/schema";
 import { ArrowUpRight } from "@/components/icons";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Home() {
   return <BookingProvider>
     <main>
+      <SpeedInsights />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <Nav />
       <Hero />
