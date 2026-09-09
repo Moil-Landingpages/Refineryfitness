@@ -2857,3 +2857,376 @@ footer small {
         gap: 12px
     }
 }
+/* ===========================================================================
+   Subpages
+   ---------------------------------------------------------------------------
+   The location, program, and company pages added for the search architecture.
+   New class names only, built from the tokens at the top of this file, so no
+   existing rule changes and the homepage renders exactly as it did.
+
+   The vocabulary follows the homepage: Oswald display headings with an orange
+   em, DM Mono kickers and buttons, hairline rules on the cream ground, and the
+   same 9vw gutter the .section rhythm uses.
+   =========================================================================== */
+
+.crumbs {
+    padding: 104px 9vw 0
+}
+
+.crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font: 500 10px var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--dim)
+}
+
+.crumbs li+li:before {
+    content: "/";
+    margin-right: 9px;
+    color: #b3b0a8
+}
+
+.crumbs a:hover {
+    color: var(--orange)
+}
+
+.crumbs [aria-current] {
+    color: var(--ink)
+}
+
+.page-hero {
+    padding: 42px 9vw 96px;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 7vw;
+    align-items: end;
+    border-bottom: 1px solid var(--line)
+}
+
+.page-hero h1 {
+    font: clamp(46px, 5.6vw, 92px)/.88 var(--display);
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    margin: 22px 0 0
+}
+
+.page-hero h1 em {
+    font-style: normal;
+    color: var(--orange)
+}
+
+.page-lede {
+    max-width: 620px;
+    margin: 26px 0 0;
+    font-size: 19px;
+    line-height: 1.58;
+    color: #4a483f
+}
+
+.page-facts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 12px 22px;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    font-size: 15px
+}
+
+.page-facts dt {
+    font: 500 10px var(--mono);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--orange);
+    align-self: center
+}
+
+.page-facts dd {
+    margin: 0;
+    line-height: 1.5;
+    color: #3c3a33
+}
+
+.page-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 26px;
+    margin-top: 34px
+}
+
+.page-section {
+    padding: 104px 9vw
+}
+
+.page-section.soft {
+    background: var(--soft)
+}
+
+.page-section.dark {
+    background: var(--ink);
+    color: var(--cream)
+}
+
+.page-section.dark h2 {
+    color: var(--cream)
+}
+
+.page-section.dark h2 em {
+    color: var(--lime)
+}
+
+.page-section.dark .page-prose p,
+.page-section.dark .page-card p {
+    color: #a9a69d
+}
+
+.page-section h2 {
+    font: clamp(32px, 3.6vw, 62px)/.92 var(--display);
+    letter-spacing: -.015em;
+    text-transform: uppercase;
+    margin: 18px 0 30px
+}
+
+.page-section h2 em {
+    font-style: normal;
+    color: var(--orange)
+}
+
+.page-section h3 {
+    font: 600 24px/1.15 var(--display);
+    letter-spacing: -.01em;
+    margin: 0 0 10px
+}
+
+.page-split {
+    display: grid;
+    grid-template-columns: .85fr 1.15fr;
+    gap: 7vw;
+    align-items: start
+}
+
+.page-prose {
+    max-width: 66ch
+}
+
+.page-prose p {
+    font-size: 17px;
+    line-height: 1.68;
+    color: #4a483f;
+    margin: 0 0 18px
+}
+
+.page-prose p strong {
+    color: var(--ink)
+}
+
+.page-prose> :last-child {
+    margin-bottom: 0
+}
+
+.page-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px
+}
+
+.page-grid.two {
+    grid-template-columns: repeat(2, 1fr)
+}
+
+.page-card {
+    border-top: 2px solid var(--orange);
+    padding-top: 20px
+}
+
+.page-card p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.62;
+    color: #4a483f
+}
+
+.page-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line)
+}
+
+.page-list li {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 22px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--line)
+}
+
+.page-list span {
+    font: 600 34px/1 var(--display);
+    color: var(--orange)
+}
+
+.page-list p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.62;
+    color: #4a483f
+}
+
+.page-section.dark .page-list,
+.page-section.dark .page-list li {
+    border-color: rgba(239, 237, 230, .2)
+}
+
+.page-section.dark .page-list span {
+    color: var(--lime)
+}
+
+.page-section.dark .page-list p {
+    color: #a9a69d
+}
+
+.page-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px
+}
+
+.page-link {
+    display: block;
+    padding: 24px;
+    border: 1px solid var(--line);
+    transition: transform .25s, border-color .25s
+}
+
+.page-link:hover {
+    transform: translateY(-3px);
+    border-color: var(--orange)
+}
+
+.page-link strong {
+    display: block;
+    font: 600 23px/1.1 var(--display);
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    margin-bottom: 9px
+}
+
+.page-link span {
+    font-size: 14px;
+    line-height: 1.55;
+    color: #4a483f
+}
+
+.page-cta {
+    padding: 120px 9vw;
+    background: var(--ink);
+    color: var(--cream);
+    text-align: center
+}
+
+.page-cta h2 {
+    font: clamp(38px, 5vw, 86px)/.86 var(--display);
+    letter-spacing: -.02em;
+    text-transform: uppercase;
+    margin: 18px 0 20px
+}
+
+.page-cta h2 em {
+    font-style: normal;
+    color: var(--lime)
+}
+
+.page-cta>p {
+    max-width: 46ch;
+    margin: 0 auto 30px;
+    color: #a9a69d;
+    font-size: 16px;
+    line-height: 1.6
+}
+
+.page-cta .kicker {
+    justify-content: center;
+    color: #8a877f
+}
+
+.page-cta .kicker b {
+    background: var(--lime)
+}
+
+.page-cta .button {
+    margin: 0 auto
+}
+
+@media (max-width:960px) {
+
+    .page-hero,
+    .page-split {
+        grid-template-columns: 1fr;
+        gap: 34px
+    }
+
+    .page-grid,
+    .page-grid.two,
+    .page-links {
+        grid-template-columns: 1fr
+    }
+
+    .page-section {
+        padding: 72px 9vw
+    }
+
+    .page-list li {
+        grid-template-columns: 48px 1fr;
+        gap: 16px
+    }
+}
+
+/* The footer's link columns, added so the location and program pages carry an
+   internal link from every page. Sits between the email line and the social
+   list, on the footer's existing centred rhythm. */
+.footer-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 34px;
+    width: min(760px, 100%);
+    margin: 40px auto 8px;
+    text-align: left
+}
+
+.footer-nav>div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.footer-nav strong {
+    font: 500 10px var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--orange)
+}
+
+.footer-nav a {
+    font-size: 14px;
+    color: #a9a69d;
+    transition: color .2s
+}
+
+.footer-nav a:hover {
+    color: var(--cream)
+}
+
+@media (max-width:720px) {
+    .footer-nav {
+        grid-template-columns: 1fr 1fr;
+        gap: 26px
+    }
+}

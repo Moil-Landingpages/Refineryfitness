@@ -16,7 +16,21 @@
  */
 
 const BASE = (process.argv[2] ?? process.env.SEO_BASE_URL ?? "http://localhost:3000").replace(/\/$/, "");
-const ROUTES = ["/"];
+// Every indexable route. Keep in step with lib/pages.ts — a page missing here
+// is a page nobody is checking.
+const ROUTES = [
+  "/",
+  "/personal-training",
+  "/personal-trainer-buda-tx",
+  "/personal-trainer-kyle-tx",
+  "/personal-trainer-hays-county-tx",
+  "/programs/strong-start",
+  "/programs/one-on-one-training",
+  "/programs/mobile-training",
+  "/programs/virtual-coaching",
+  "/about",
+  "/contact",
+];
 const REQUIRED_PLACES = ["Buda", "Kyle", "Hays County"];
 
 const failures = [];
@@ -84,6 +98,7 @@ async function checkRoute(route) {
 
   const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)];
   if (!blocks.length) fail(route, "no JSON-LD found");
+  let sawBreadcrumbs = false;
 
   for (const [, raw] of blocks) {
     let parsed;
@@ -98,18 +113,31 @@ async function checkRoute(route) {
     if (/aggregateRating/i.test(text)) {
       fail(route, "JSON-LD publishes an aggregateRating — none is documented");
     }
-    if (!/Refinery Fitness/i.test(text)) fail(route, "JSON-LD does not name Refinery Fitness");
-    for (const place of REQUIRED_PLACES) {
-      if (!text.includes(place)) fail(route, `JSON-LD areaServed is missing ${place}`);
+    if (route === "/") {
+      if (!/Refinery Fitness/i.test(text)) fail(route, "JSON-LD does not name Refinery Fitness");
+      for (const place of REQUIRED_PLACES) {
+        if (!text.includes(place)) fail(route, `JSON-LD areaServed is missing ${place}`);
+      }
     }
-    // Every node in the graph should be reachable: a dangling @id reference
+    if (parsed["@type"] === "BreadcrumbList") sawBreadcrumbs = true;
+    // Every node in the homepage graph should be reachable: a dangling @id there
     // means an engine reads disconnected fragments instead of one entity.
-    const graph = parsed["@graph"] ?? [];
-    const ids = new Set(graph.map((node) => node["@id"]).filter(Boolean));
-    for (const referenced of text.matchAll(/"@id":"([^"]+)"/g)) {
-      const id = referenced[1];
-      if (id.includes("#") && !ids.has(id)) fail(route, `JSON-LD references ${id}, which no node defines`);
+    //
+    // Subpages are exempt by design. A service node's provider points at the
+    // business @id defined in the homepage graph, which is how the pieces are
+    // meant to join up — flagging it here would be flagging correct markup.
+    if (route === "/") {
+      const graph = parsed["@graph"] ?? [];
+      const ids = new Set(graph.map((node) => node["@id"]).filter(Boolean));
+      for (const referenced of text.matchAll(/"@id":"([^"]+)"/g)) {
+        const id = referenced[1];
+        if (id.includes("#") && !ids.has(id)) fail(route, `JSON-LD references ${id}, which no node defines`);
+      }
     }
+  }
+  // Every subpage must place itself in the hierarchy.
+  if (route !== "/" && !sawBreadcrumbs) {
+    fail(route, "no BreadcrumbList — every subpage needs one");
   }
 }
 
