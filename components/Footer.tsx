@@ -1,3 +1,4 @@
+import { COVERAGE_SHORT } from "@/lib/market";
 import { EMAIL, SOCIALS, mailto } from "@/lib/site";
 import { SOCIAL_ICONS } from "@/components/icons";
 import Logo from "@/components/Logo";
@@ -20,7 +21,7 @@ export default function Footer() {
       })}
     </ul>
     <small>
-      <span>BUDA · KYLE · HAYS COUNTY · TEXAS</span>
+      <span>{COVERAGE_SHORT}</span>
       <a className="built-with" href="https://moilapp.com" target="_blank" rel="noopener noreferrer">
         Built with <b>Moil</b>
       </a>

@@ -96,3 +96,20 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)
 - [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+
+## SEO, local search, and AEO
+
+The market model lives in `lib/market.ts` — one source of truth for every place
+name the site publishes, read by `lib/schema.ts`, the footer strip, and the
+keyword set in `app/layout.tsx`. A city gated behind `published: false` reaches
+neither the page nor the schema; flipping the flag propagates it everywhere.
+
+- `npm run check:seo` — rendered-metadata smoke test covering status, metadata,
+  canonical, landmark structure, and entity-graph integrity. Start the server
+  first (`npm run build && npm run start`), or pass a base URL to check
+  production: `npm run check:seo -- https://refineryfitness.biz`. It exits
+  non-zero, so it can gate CI.
+- [`docs/local-seo-aeo-plan.md`](docs/local-seo-aeo-plan.md) — the audit, the
+  geographic target model, and the phased plan with its owner-approval gates.
+- [`docs/seo-aeo-implementation-plan.html`](docs/seo-aeo-implementation-plan.html)
+  — the same plan as a printable client-facing brief.

@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>SEO &amp; AEO Implementation Plan — Refinery Fitness of Buda</title>
+    <style>
+      :root {
+        --ink: #10100e;
+        --muted: #6b695f;
+        --accent: #c2431f;
+        --accent-dark: #8f2f13;
+        --accent-soft: #fdefe9;
+        --cream: #f7f5ee;
+        --line: #ddd8ca;
+        --danger: #b42318;
+        --danger-soft: #fff0ee;
+        --warning: #9a6700;
+        --warning-soft: #fff7e8;
+        --ok: #15703f;
+        --ok-soft: #e8f6ee;
+        --white: #ffffff;
+        --shadow: 0 18px 50px rgba(16, 16, 14, 0.11);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background: var(--cream);
+        font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.6;
+      }
+
+      a { color: var(--accent-dark); }
+      a:hover { color: var(--accent); }
+
+      .page { width: min(1120px, calc(100% - 32px)); margin: 28px auto 56px; }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        padding: 64px clamp(24px, 5vw, 68px);
+        color: var(--white);
+        background: linear-gradient(135deg, #10100e, #55210f 55%, #c2431f);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        width: 360px; height: 360px;
+        right: -100px; top: -150px;
+        border: 70px solid rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        font-size: 0.78rem; font-weight: 800;
+        letter-spacing: 0.13em; text-transform: uppercase;
+      }
+
+      .hero h1 {
+        max-width: 820px; margin: 0;
+        font-size: clamp(2.25rem, 5vw, 4.4rem);
+        line-height: 1.04; letter-spacing: -0.045em;
+      }
+
+      .hero .lead {
+        max-width: 780px; margin: 24px 0 30px;
+        font-size: clamp(1rem, 2vw, 1.22rem);
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      .meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.84rem; }
+      .meta span {
+        padding: 7px 11px;
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+      }
+
+      nav {
+        display: flex; flex-wrap: wrap; gap: 10px;
+        margin: 20px 0; padding: 14px;
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--line); border-radius: 16px;
+        position: sticky; top: 8px; z-index: 10;
+        backdrop-filter: blur(10px);
+      }
+
+      nav a {
+        padding: 7px 11px; color: var(--ink);
+        font-size: 0.84rem; font-weight: 700;
+        text-decoration: none; border-radius: 9px;
+      }
+      nav a:hover { background: var(--accent-soft); }
+
+      section {
+        margin-top: 20px; padding: clamp(24px, 4vw, 44px);
+        background: var(--white);
+        border: 1px solid var(--line); border-radius: 22px;
+        box-shadow: 0 8px 30px rgba(16, 16, 14, 0.04);
+      }
+
+      h2 {
+        margin: 0 0 18px;
+        font-size: clamp(1.55rem, 3vw, 2.2rem);
+        line-height: 1.15; letter-spacing: -0.025em;
+      }
+
+      h3 { margin: 28px 0 8px; line-height: 1.25; }
+      p { margin: 0 0 14px; }
+
+      .callout {
+        padding: 20px 22px;
+        background: var(--danger-soft);
+        border-left: 5px solid var(--danger);
+        border-radius: 12px;
+      }
+      .callout strong { color: var(--danger); }
+
+      .callout.good { background: var(--ok-soft); border-left-color: var(--ok); }
+      .callout.good strong { color: var(--ok); }
+
+      .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+
+      .card { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+      .card h3 { margin: 8px 0 8px; font-size: 1.02rem; }
+      .card p { color: var(--muted); font-size: 0.93rem; margin: 0; }
+
+      .pill {
+        display: inline-block; padding: 4px 9px;
+        font-size: 0.7rem; font-weight: 800;
+        letter-spacing: 0.06em; text-transform: uppercase;
+        border-radius: 999px;
+      }
+      .pill.red { color: var(--danger); background: var(--danger-soft); }
+      .pill.amber { color: var(--warning); background: var(--warning-soft); }
+      .pill.green { color: var(--ok); background: var(--ok-soft); }
+
+      .table-wrap { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+      th, td { padding: 13px 12px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+      th {
+        color: var(--muted); font-size: 0.73rem;
+        letter-spacing: 0.06em; text-transform: uppercase;
+        background: var(--accent-soft);
+      }
+      tr:last-child td { border-bottom: 0; }
+      code {
+        padding: 1px 5px; border-radius: 5px;
+        background: var(--accent-soft); font-size: 0.88em;
+      }
+
+      .phase {
+        display: grid; grid-template-columns: 128px 1fr;
+        gap: 24px; padding: 28px 0; border-top: 1px solid var(--line);
+      }
+      .phase:first-of-type { border-top: 0; }
+      .phase-label { font-weight: 850; color: var(--accent-dark); }
+      .phase-label small { display: block; color: var(--muted); font-weight: 600; }
+
+      ol, ul { margin: 10px 0 0; padding-left: 1.25rem; }
+      li { margin: 7px 0; }
+
+      .checklist {
+        display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 11px 20px; padding: 0; list-style: none;
+      }
+      .checklist li {
+        position: relative; margin: 0;
+        padding: 12px 12px 12px 38px;
+        background: var(--accent-soft); border-radius: 11px;
+      }
+      .checklist li::before {
+        content: "\2713"; position: absolute; left: 13px; top: 11px;
+        color: var(--accent); font-weight: 900;
+      }
+      .checklist li.pending { background: var(--warning-soft); }
+      .checklist li.pending::before { content: "\25CB"; color: var(--warning); }
+
+      .note { color: var(--muted); font-size: 0.9rem; }
+
+      footer { padding: 28px 8px 0; color: var(--muted); text-align: center; font-size: 0.82rem; }
+
+      @media (max-width: 780px) {
+        .grid, .checklist { grid-template-columns: 1fr; }
+        .phase { grid-template-columns: 1fr; gap: 8px; }
+        nav { position: static; }
+      }
+
+      @media print {
+        @page { margin: 14mm; }
+        body { background: #fff; font-size: 10.5pt; }
+        .page { width: 100%; margin: 0; }
+        .hero { padding: 32px; border-radius: 0; box-shadow: none; }
+        .hero h1 { font-size: 32pt; }
+        nav { display: none; }
+        section { box-shadow: none; break-inside: avoid; }
+        a { color: inherit; text-decoration: none; }
+        .phase { break-inside: avoid; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="hero">
+        <p class="eyebrow">Implementation brief</p>
+        <h1>The foundations hold — the gap is architecture and proof</h1>
+        <p class="lead">Refinery Fitness arrived in the best technical shape of the three clients: a correct canonical, working robots and sitemap files, and a truthful linked entity graph with a real service-area model. What it does not have is more than one page to rank, a way to be contacted other than email, or anything holding those signals in place as the site grows.</p>
+        <div class="meta">
+          <span>Prepared 9 September 2026</span>
+          <span>Production: refineryfitness.biz</span>
+          <span>Next.js 16 · App Router</span>
+          <span>Build verified</span>
+        </div>
+      </header>
+
+      <nav aria-label="Document sections">
+        <a href="#decision">Decision</a>
+        <a href="#market">Market</a>
+        <a href="#findings">Findings</a>
+        <a href="#evidence">Evidence</a>
+        <a href="#plan">Plan</a>
+        <a href="#done">Definition of done</a>
+        <a href="#measurement">Measurement</a>
+        <a href="#sources">Sources</a>
+      </nav>
+
+      <section id="decision">
+        <p class="eyebrow" style="color: var(--accent)">Executive decision</p>
+        <h2>Stop protecting the foundations by hand; build the pages the market searches for</h2>
+        <div class="callout good">
+          <strong>Unusual position:</strong> There is no critical defect to recover from. The canonical resolves, the schema is truthful, <code>areaServed</code> already names Buda, Kyle, and Hays County, and no unsupported rating is published anywhere. That is rarer than it sounds.
+        </div>
+        <p style="margin-top: 18px">The constraint is architecture. Four genuinely different offers &mdash; Strong Start, 1:1 training, mobile training, and virtual coaching &mdash; live as sections of a single URL, so &ldquo;mobile personal trainer Buda&rdquo; and &ldquo;online fitness coach Texas&rdquo; compete for the same page. The second constraint is contact: a prospect who wants to book has an email link and nothing else. Neither is fixed by more homepage copy.</p>
+        <p><strong>What was deliberately not done:</strong> No city pages were created, and San Marcos was <em>not</em> added to the published service area. It sits inside the Hays County the site already claims, which makes it a reasonable inference &mdash; but inference is exactly what erodes local entity trust. It is wired into the market model as one boolean, waiting on Jeff's confirmation.</p>
+      </section>
+
+      <section id="market">
+        <p class="eyebrow" style="color: var(--accent)">Geographic target model</p>
+        <h2>Where this business actually competes</h2>
+        <p>Codified in <code>lib/market.ts</code>, which the entity graph, the footer strip, and the keyword set all read. Refinery is a service-area business: sessions run in person, at the client's home or garage gym, or over video, so the model publishes a locality with no street address &mdash; which is correct, and which also means it is not eligible for a storefront Google Business Profile without a staffed customer-facing location.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tier</th><th>Places</th><th>Role in the plan</th><th>Published</th></tr></thead>
+            <tbody><tr><td>Primary home market</td><td><strong>Buda, TX</strong> (Hays County)</td><td>In the business name, the page title, and the footer. Published as <code>addressLocality</code> with no street address, deliberately.</td><td><span class="pill green">Yes</span></td></tr>
+              <tr><td>Core service area</td><td><strong>Buda · Kyle · Hays County</strong></td><td>Named in the coverage statement, the hero meta, the mobile-training program, the FAQ, and <code>areaServed</code>.</td><td><span class="pill green">Yes</span></td></tr>
+              <tr><td>Core &mdash; pending</td><td><strong>San Marcos, TX</strong></td><td>The Hays County seat, inside the county already claimed. Plausible, unconfirmed, and therefore unpublished.</td><td><span class="pill amber">Owner gate</span></td></tr>
+              <tr><td>Secondary area</td><td>Dripping Springs · Wimberley · South Austin</td><td>Add only where mobile training genuinely reaches and Jeff confirms it.</td><td><span class="pill amber">Owner gate</span></td></tr>
+              <tr><td>Virtual reach</td><td>United States</td><td>A real program (Virtual Coaching, 04), explicitly for people outside Hays County. Kept as a qualifier after the local claim.</td><td><span class="pill green">Yes</span></td></tr></tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top: 14px">Flipping <code>published: true</code> on San Marcos in <code>lib/market.ts</code> propagates it to the coverage statement, the footer strip, the schema <code>areaServed</code>, and the keyword set in one commit.</p>
+      </section>
+
+      <section id="findings">
+        <p class="eyebrow" style="color: var(--accent)">Audit summary</p>
+        <h2>Priority findings</h2>
+        <div class="grid"><article class="card"><span class="pill green">Healthy</span><h3>Identity and indexability are correct</h3><p>One canonical origin in <code>lib/site.ts</code>, a working <code>robots.ts</code> and <code>sitemap.ts</code> with a pinned <code>lastmod</code>, and a linked graph of business, founder, website, and FAQ page. Nothing here needed recovery.</p></article>
+          <article class="card"><span class="pill green">Resolved</span><h3>Place names lived in two files</h3><p><code>areaServed</code> was a literal array in <code>lib/schema.ts</code> and the footer strip was a hard-coded string. Both now read <code>lib/market.ts</code>, so a confirmed city reaches copy and schema in the same commit.</p></article>
+          <article class="card"><span class="pill green">Resolved</span><h3>Nothing verified the signals stayed true</h3><p>A smoke test now checks the route, the discovery files, the landmark structure, the canonical, and the graph &mdash; including that every <code>@id</code> reference resolves to a node that exists, and that no <code>aggregateRating</code> appears.</p></article>
+          <article class="card"><span class="pill red">Open</span><h3>One indexable URL for four distinct offers</h3><p>Strong Start, 1:1 training, mobile training, and virtual coaching answer different searches with different intent and different price expectations, and share one page. This is the largest ceiling on the site.</p></article>
+          <article class="card"><span class="pill red">Open</span><h3>Email is the only way to make contact</h3><p>There is no telephone number in the schema or on the page, no contact page, and no booking flow &mdash; every CTA is a <code>mailto:</code>. For a local service business, that discards a meaningful share of qualified local traffic.</p></article>
+          <article class="card"><span class="pill amber">Open</span><h3>No trust or legal pages</h3><p>There is no About page for Jeff beyond a homepage section, no privacy page, and no terms page &mdash; while the site collects enquiries and check-in submissions.</p></article>
+          <article class="card"><span class="pill amber">Open</span><h3><code>sameAs</code> is incomplete</h3><p><code>lib/site.ts</code> records that Jeff named LinkedIn on the 7 August review call but never sent the URL. The profile set is Facebook and Instagram only.</p></article>
+          <article class="card"><span class="pill amber">Open</span><h3>No Google Business Profile decision</h3><p>As a service-area business with no staffed location, Refinery may still register a service-area profile with a hidden address &mdash; but only if Jeff has an eligible business address. This decision has not been made.</p></article>
+          <article class="card"><span class="pill amber">Open</span><h3>No proof beyond testimonial copy</h3><p>The Proof section carries client outcomes with no documented permission or methodology on file. They are correctly <em>not</em> marked up as a rating; the underlying evidence still needs to exist.</p></article></div>
+      </section>
+
+      <section id="evidence">
+        <p class="eyebrow" style="color: var(--accent)">Evidence</p>
+        <h2>What was checked, and what came back</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Check</th><th>Result</th><th>Required outcome</th></tr></thead>
+            <tbody><tr><td>Local production build</td><td><span class="pill green">Pass</span></td><td><code>npm run build</code> compiles and prerenders the route, manifest, and discovery files.</td></tr>
+              <tr><td>ESLint and TypeScript</td><td><span class="pill green">Pass</span></td><td>No errors reported.</td></tr>
+              <tr><td><code>/</code></td><td><span class="pill green">200</span></td><td>Title, description, self-canonical, exactly one <code>&lt;h1&gt;</code>, one <code>&lt;main&gt;</code>, and an <code>og:image</code>.</td></tr>
+              <tr><td><code>/robots.txt</code>, <code>/sitemap.xml</code></td><td><span class="pill green">200</span></td><td>Already correct before this release; unchanged.</td></tr>
+              <tr><td><code>/manifest.webmanifest</code></td><td><span class="pill green">200</span></td><td>Added in this release; the icons it declares exist in <code>public/</code>.</td></tr>
+              <tr><td>JSON-LD graph</td><td><span class="pill green">Parses</span></td><td>HealthClub/LocalBusiness, Person, WebSite, and WebPage/FAQPage nodes; every <code>@id</code> reference resolves; <code>areaServed</code> gives Buda, Kyle, and Hays County.</td></tr>
+              <tr><td><code>aggregateRating</code></td><td><span class="pill green">Absent</span></td><td>Correct &mdash; no documented review data supports one. The smoke test now fails the build if one appears.</td></tr>
+              <tr><td>Telephone in schema</td><td><span class="pill amber">Absent</span></td><td>Honest today, because no number is published. Add one once Jeff supplies it.</td></tr>
+              <tr><td>Production HTTP checks</td><td><span class="pill red">Not run</span></td><td>The session's network policy blocks outbound requests to the domain. Run <code>npm run check:seo -- https://refineryfitness.biz</code> after deploy.</td></tr>
+              <tr><td>Search Console, GBP, analytics</td><td><span class="pill red">Unavailable</span></td><td>No baseline could be recorded.</td></tr></tbody>
+          </table>
+        </div>
+        <p class="note" style="margin-top: 14px">The local build is verified; the deployment is not. Because <code>SITE_URL</code> is the apex <code>refineryfitness.biz</code>, confirm on production that the <code>www</code> variant redirects to the apex in one hop rather than serving a duplicate.</p>
+      </section>
+
+      <section id="plan">
+        <p class="eyebrow" style="color: var(--accent)">Delivery roadmap</p>
+        <h2>Implementation phases</h2>
+        <div class="phase"><div class="phase-label">Phase 0<small>Owner · 1–2 days</small></div><div><h3 style="margin-top: 0">Supply the facts the site is missing</h3><ol><li>Provide a public telephone number, or confirm that email-only contact is a deliberate policy.</li><li>Confirm whether San Marcos, Dripping Springs, Wimberley, or South Austin are genuinely served by mobile training.</li><li>Decide the Google Business Profile question: is there an eligible business address for a service-area profile with a hidden address?</li><li>Send the LinkedIn URL noted as outstanding in <code>lib/site.ts</code>, plus any other official profile.</li><li>Confirm which client outcomes in the Proof section have written permission, and what evidence supports them.</li><li>Confirm the kinesiology training and any certifications, with verification links where they exist.</li></ol></div></div>
+        <div class="phase"><div class="phase-label">Phase 1<small>Engineering · SHIPPED</small></div><div><h3 style="margin-top: 0">Hold the foundations in place</h3><ol><li>Codify the market model in <code>lib/market.ts</code> as the single source of truth for place names. <span class="pill green">Done</span></li><li>Read <code>areaServed</code>, the business description, the footer strip, and the keyword set from it. <span class="pill green">Done</span></li><li>Add <code>app/manifest.ts</code>, whose declared icons resolve to real assets. <span class="pill green">Done</span></li><li>Add <code>npm run check:seo</code>, covering status, metadata, canonical, landmark structure, graph integrity, and the discovery files. <span class="pill green">Done</span></li></ol></div></div>
+        <div class="phase"><div class="phase-label">Phase 2<small>Engineering + owner · 2–4 days</small></div><div><h3 style="margin-top: 0">Make the business contactable and accountable</h3><ol><li>Add a <code>/contact</code> page with the confirmed phone number, email, service area, and one booking path &mdash; and add <code>telephone</code> to the business node.</li><li>Add <code>/about-jeff-mensing</code> as a real practitioner page: training, credentials with verification links, scope, and approach. Point the <code>Person</code> node's <code>url</code> at it.</li><li>Add <code>/privacy</code> and <code>/terms</code>, and link them globally &mdash; the site collects enquiries and check-in submissions today with neither.</li><li>Complete <code>sameAs</code> once the profile URLs arrive.</li><li>Replace every <code>mailto:</code> CTA with the booking or contact flow, and track the click.</li></ol></div></div>
+        <div class="phase"><div class="phase-label">Phase 3<small>Content + engineering · 1–2 weeks</small></div><div><h3 style="margin-top: 0">Give each program its own destination</h3><ol><li>Create canonical program pages: <code>/programs/strong-start</code>, <code>/programs/personal-training</code>, <code>/programs/mobile-training</code>, <code>/programs/virtual-coaching</code>.</li><li>Each answers the primary intent in its first paragraph, names who it is and is not for, explains the RPMS method as it applies there, states how pricing and scheduling work, renders the coverage statement, and offers one CTA.</li><li>The mobile-training page is the strongest local asset in the set &mdash; it is the one offer whose value is inherently geographic. Give it the real logistics: travel radius, what equipment Jeff brings, what a garage or home session needs.</li><li>Add each page to <code>app/sitemap.ts</code> and build hub-and-spoke internal links with descriptive anchors.</li><li><strong>Do not</strong> create Buda and Kyle pages by swapping a city name. The mobile-training page already carries the geographic intent honestly.</li></ol></div></div>
+        <div class="phase"><div class="phase-label">Phase 4<small>Owner + marketing · 2–6 weeks</small></div><div><h3 style="margin-top: 0">Local profiles and genuine authority</h3><ol><li>If eligible, create the service-area Google Business Profile with the approved name, category, hidden address, service area covering the confirmed cities, hours, and service list.</li><li>Keep one approved name, phone, email, and service-area record across Google, Bing Places, Apple Business Connect, Facebook, and Instagram.</li><li>Build Central Texas authority the way this business actually earns it: churches, schools, local sports programmes, and Hays County community organisations.</li><li>Create a permission-based review process. Never gate reviews or mark testimonials up as an aggregate rating.</li></ol></div></div>
+        <div class="phase"><div class="phase-label">Phase 5<small>Engineering · ongoing</small></div><div><h3 style="margin-top: 0">Verify, measure, iterate</h3><ol><li>Run <code>npm run check:seo -- https://refineryfitness.biz</code> after deploy and wire it into CI.</li><li>Confirm the <code>www</code> variant redirects to the apex in one hop.</li><li>Submit the sitemap in Google Search Console and Bing Webmaster Tools once the program pages are live.</li><li>Consider naming <code>OAI-SearchBot</code> explicitly in <code>robots.ts</code>; the current blanket allow covers it, but naming it documents the intent. Treat <code>GPTBot</code> as a separate decision.</li><li>Measure hero and LCP media with field Core Web Vitals &mdash; the page is image-heavy and animation-heavy.</li><li>Record the search, AI-referral, and enquiry baseline before the traffic from these changes arrives.</li></ol></div></div>
+      </section>
+
+      <section id="done">
+        <p class="eyebrow" style="color: var(--accent)">Release gate</p>
+        <h2>Definition of done</h2>
+        <p class="note">Ticked items are verified in this release. Circled items are gated on owner-supplied facts and remain open.</p>
+        <ul class="checklist"><li>The route returns 200 with a unique title, description, and one correct self-canonical.</li>
+          <li><code>/robots.txt</code>, <code>/sitemap.xml</code>, and the manifest return 200.</li>
+          <li>The sitemap contains only canonical, indexable, successful URLs.</li>
+          <li>Structured data parses, every <code>@id</code> reference resolves, and the graph matches visible facts.</li>
+          <li>No unsupported rating, address, or credential is published.</li>
+          <li>One coverage statement drives copy, schema, and keywords from a single file.</li>
+          <li>One <code>&lt;header&gt;</code> and one <code>&lt;main&gt;</code> landmark, and exactly one <code>&lt;h1&gt;</code>.</li>
+          <li>Representative routes pass an automated rendered-metadata smoke test.</li>
+          <li class="pending">A telephone number is published and present in the business node.</li>
+          <li class="pending">Contact, About, Privacy, and Terms pages exist and are linked globally.</li>
+          <li class="pending">Each program with distinct search intent has its own canonical page.</li>
+          <li class="pending"><code>sameAs</code> lists every official profile, LinkedIn included.</li>
+          <li class="pending">The Google Business Profile eligibility decision is made and acted on.</li>
+          <li class="pending">Client outcomes have documented permission and reviewed evidence.</li>
+          <li class="pending">The <code>www</code> variant is confirmed to redirect once on production.</li>
+          <li class="pending">A search, AI-referral, and enquiry baseline is recorded.</li></ul>
+      </section>
+
+      <section id="measurement">
+        <p class="eyebrow" style="color: var(--accent)">Ongoing operations</p>
+        <h2>Measure discovery, representation, and outcomes</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Area</th><th>Measures</th><th>Cadence</th></tr></thead>
+            <tbody><tr><td>Technical</td><td>Indexed URLs, canonical exclusions, sitemap errors, 4xx/5xx rate, structured-data errors, field Core Web Vitals by template. <code>npm run check:seo</code> against production after every deploy.</td><td>Weekly</td></tr>
+              <tr><td>Search</td><td>Non-branded impressions, clicks, CTR, and position by landing page and intent; branded demand tracked separately.</td><td>Weekly / monthly</td></tr>
+              <tr><td>Local</td><td>Incognito and location-simulated checks for the fixed query set from one representative ZIP per city; Google Business Profile performance where eligible.</td><td>Monthly</td></tr>
+              <tr><td>Business</td><td>Organic enquiries and bookings, CTA clicks, qualified leads, and assisted conversion by source and UTM.</td><td>Monthly</td></tr>
+              <tr><td>AI referrals</td><td>Sessions and conversions from AI referrers, including ChatGPT's documented <code>utm_source=chatgpt.com</code>.</td><td>Monthly</td></tr>
+              <tr><td>AI representation</td><td>Fixed prompt set by engine, interface, locale, and date: brand mention, clickable citation, cited URL, accuracy, sentiment.</td><td>Monthly, repeated samples</td></tr>
+              <tr><td>Entity consistency</td><td>Controlled-profile audit across every listing the owner controls: name, phone, email, URL, address or service-area model.</td><td>Monthly / quarterly</td></tr></tbody>
+          </table>
+        </div>
+        <h3>Initial local query set</h3>
+        <p class="note">A tracking list, not promised rankings. Track the same queries, locations, and devices every time; record the date; distinguish organic from map results.</p>
+        <ul><li><code>personal trainer Buda TX</code>, <code>gym Buda TX</code></li>
+          <li><code>personal trainer Kyle TX</code>, <code>strength coach Kyle TX</code></li>
+          <li><code>mobile personal trainer Buda</code>, <code>in home personal trainer Hays County</code></li>
+          <li><code>faith based personal trainer Texas</code>, <code>Christian fitness coach Austin area</code></li>
+          <li><code>online personal training Texas</code>, <code>virtual health coach Hays County</code></li>
+          <li>Brand queries: <code>Refinery Fitness of Buda</code>, <code>Jeff Mensing trainer</code></li></ul>
+      </section>
+
+      <section id="sources">
+        <p class="eyebrow" style="color: var(--accent)">Research basis</p>
+        <h2>Primary documentation the recommendations rest on</h2>
+        <ul>
+          <li><a href="https://developers.google.com/search/docs/fundamentals/ai-optimization-guide">Google Search Central — AI features and your website</a></li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls">Google Search Central — canonical URLs</a></li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap">Google Search Central — sitemaps</a></li>
+          <li><a href="https://developers.google.com/search/docs/appearance/structured-data/sd-policies">Google Search Central — structured-data policies</a></li>
+          <li><a href="https://developers.google.com/search/docs/appearance/structured-data/review-snippet">Google Search Central — review snippets and self-serving reviews</a></li>
+          <li><a href="https://developers.google.com/search/docs/essentials/spam-policies#doorway-abuse">Google Search Central — doorway abuse</a></li>
+          <li><a href="https://developers.google.com/search/docs/fundamentals/creating-helpful-content">Google Search Central — helpful, reliable, people-first content</a></li>
+          <li><a href="https://support.google.com/business/answer/3038177">Google Business Profile — eligibility and guidelines</a></li>
+          <li><a href="https://schema.org/areaServed">Schema.org — <code>areaServed</code></a></li>
+          <li><a href="https://help.openai.com/en/articles/12627856-publishers-and-developers-faq">OpenAI — publishers and developers FAQ</a></li>
+          <li><a href="https://www.bing.com/webmasters/help/webmaster-guidelines-30fba23a">Bing Webmaster Guidelines</a></li>
+          <li><a href="https://www.indexnow.org/documentation">IndexNow protocol</a></li>
+        </ul>
+        <p class="note" style="margin-top: 18px">
+          These are the references the recommendations rest on. The session's network policy blocked outbound
+          fetches, so they are cited from the engagement's established source list rather than re-fetched on
+          9 September 2026.
+        </p>
+        <p class="note">
+          Not recommended as requirements: fixed title or description lengths, minimum word counts, numeric
+          &ldquo;factual density&rdquo;, universal FAQ schema, generic Google Indexing API submissions, fixed
+          redirect-equity percentages, or <code>llms.txt</code> as a launch priority.
+        </p>
+      </section>
+
+      <footer>
+        Prepared from repository inspection, a verified local production build, and source-verified SEO/AEO guidance.
+        Production HTTP verification is outstanding.
+      </footer>
+    </main>
+  </body>
+</html>
