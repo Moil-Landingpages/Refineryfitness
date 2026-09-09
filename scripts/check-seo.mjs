@@ -131,7 +131,18 @@ for (const route of ROUTES) {
   await checkRoute(route);
   console.log(`  checked ${route}`);
 }
-await checkDiscoveryFile("/robots.txt", [["a declared sitemap", /Sitemap:/i]]);
+// The AI retrieval crawlers must stay named in robots.txt. A blanket allow
+// covers them, so this guards the intent: nobody can remove citation access
+// for ChatGPT, Claude, or Perplexity without this check going red.
+await checkDiscoveryFile("/robots.txt", [
+  ["a declared sitemap", /Sitemap:/i],
+  ["Googlebot", /Googlebot/],
+  ["OAI-SearchBot (ChatGPT search)", /OAI-SearchBot/],
+  ["ChatGPT-User", /ChatGPT-User/],
+  ["Claude-SearchBot", /Claude-SearchBot/],
+  ["Claude-User", /Claude-User/],
+  ["PerplexityBot", /PerplexityBot/],
+]);
 console.log("  checked /robots.txt");
 await checkDiscoveryFile("/sitemap.xml", [["a urlset", /<urlset/i]]);
 console.log("  checked /sitemap.xml");
