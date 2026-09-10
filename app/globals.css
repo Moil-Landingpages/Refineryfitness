@@ -55,7 +55,10 @@ h3 {
     margin-top: 0
 }
 
-nav {
+/* Scoped to a class, not the `nav` element. As a bare element selector this
+   also captured the footer's link columns and the breadcrumb trail — both are
+   <nav> landmarks — and pinned them to the top of the viewport over the hero. */
+.site-nav {
     height: 72px;
     padding: 0 4.5vw;
     position: fixed;
@@ -72,7 +75,7 @@ nav {
     transition: background .35s ease, backdrop-filter .35s ease
 }
 
-nav.scrolled {
+.site-nav.scrolled {
     background: #10100ef2;
     backdrop-filter: blur(10px)
 }
@@ -88,15 +91,301 @@ nav.scrolled {
     height: auto
 }
 
+/* ---- header navigation -----------------------------------------------------
+   The bar previously held three homepage anchors, and below 760px hid them
+   outright. It now carries two dropdowns and a drawer. Accents follow the
+   site's ground rule — the header is ink, so the accent here is lime. */
 .nav-links {
     display: flex;
+    align-items: center;
     gap: 28px
 }
 
-.nav-links a {
+.nav-links>a,
+.nav-trigger {
     font: 500 10px var(--mono);
     letter-spacing: .1em;
-    text-transform: uppercase
+    text-transform: uppercase;
+    color: var(--cream);
+    background: none;
+    border: 0;
+    padding: 0
+}
+
+/* The underline is the only state change on a link, so it has to read at 10px:
+   it sits on the mono baseline and grows from the left. */
+.nav-links>a,
+.nav-trigger {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 72px
+}
+
+.nav-links>a::after,
+.nav-trigger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 24px;
+    height: 1px;
+    background: var(--lime);
+    transition: right .3s cubic-bezier(.22, 1, .36, 1)
+}
+
+.nav-links>a:hover::after,
+.nav-trigger:hover::after,
+.nav-menu.open .nav-trigger::after,
+.nav-links>a[aria-current]::after {
+    right: 0
+}
+
+.nav-menu {
+    position: relative
+}
+
+.nav-trigger i {
+    display: inline-flex;
+    transition: transform .3s cubic-bezier(.22, 1, .36, 1)
+}
+
+.nav-menu.open .nav-trigger i {
+    transform: rotate(180deg)
+}
+
+/* The panel hangs from the bar's own bottom edge rather than floating free, so
+   the header reads as one surface opening rather than a card appearing. */
+/* The panel is opaque on purpose. A translucent sheet over the hero was the
+   single worst thing about the old menu: the photograph read straight through
+   the type and the last items were illegible against the bright areas. This
+   sits on near-solid ink with its own grain, so contrast never depends on
+   whatever is scrolled underneath it. */
+.nav-panel {
+    position: absolute;
+    top: 72px;
+    left: -26px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 30px;
+    width: max-content;
+    max-width: calc(100vw - 36px);
+    padding: 26px 28px 20px;
+    background:
+        radial-gradient(rgba(239, 237, 230, .05) .6px, transparent .6px) 0 0/7px 7px,
+        linear-gradient(180deg, #14140f, #0c0c0a);
+    border: 1px solid rgba(239, 237, 230, .13);
+    border-top: 2px solid var(--lime);
+    box-shadow: 0 36px 70px rgba(0, 0, 0, .6), 0 2px 0 rgba(239, 237, 230, .04) inset;
+    animation: nav-panel-in .22s cubic-bezier(.22, 1, .36, 1)
+}
+
+/* A hairline joining the panel back to the bar, so it reads as the header
+   opening rather than a card that appeared nearby. */
+.nav-panel::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 26px;
+    width: 42px;
+    height: 2px;
+    background: var(--cream)
+}
+
+.nav-panel-rail {
+    display: flex;
+    flex-direction: column;
+    padding-right: 26px;
+    border-right: 1px solid rgba(239, 237, 230, .1)
+}
+
+/* Pinned to the foot of the rail, so a short intro does not leave the column
+   looking abandoned and the panel always offers a way out that is not one of
+   the rows. */
+.nav-panel-out {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 18px;
+    font: 500 10px var(--mono);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--cream);
+    border-bottom: 1px solid rgba(239, 237, 230, .28);
+    padding-bottom: 8px;
+    width: max-content;
+    max-width: 100%;
+    /* A four-line mono label is not a link, it is a paragraph. */
+    white-space: nowrap;
+    transition: color .25s ease, border-color .25s ease
+}
+
+.nav-panel-out i {
+    display: inline-flex;
+    transition: transform .25s cubic-bezier(.22, 1, .36, 1)
+}
+
+.nav-panel-out:hover {
+    color: var(--lime);
+    border-color: var(--lime)
+}
+
+.nav-panel-out:hover i {
+    transform: translate(2px, -2px)
+}
+
+.nav-panel-label {
+    margin: 0 0 12px;
+    font: 500 10px var(--mono);
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--lime)
+}
+
+.nav-panel-rail .nav-panel-intro {
+    margin: 0
+}
+
+@keyframes nav-panel-in {
+    from {
+        opacity: 0;
+        transform: translateY(-7px)
+    }
+}
+
+.nav-panel-intro {
+    font-size: 12px;
+    line-height: 1.55;
+    color: #8a877f
+}
+
+.nav-panel ul,
+.nav-drawer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.nav-panel li+li {
+    border-top: 1px solid rgba(239, 237, 230, .1)
+}
+
+/* `li a`, not `a`: the rail's exit link is also an anchor inside this panel,
+   and the row grid is not its layout. */
+.nav-panel li a {
+    display: grid;
+    grid-template-columns: 26px minmax(0, 300px) 16px;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 12px 12px 10px;
+    margin-left: -10px;
+    color: var(--cream);
+    transition: background .25s ease, transform .25s cubic-bezier(.22, 1, .36, 1)
+}
+
+.nav-panel li a:hover,
+.nav-panel li a:focus-visible {
+    background: rgba(216, 255, 81, .07);
+    transform: translateX(4px)
+}
+
+.nav-item-index {
+    font: 500 10px var(--mono);
+    letter-spacing: .08em;
+    color: var(--lime)
+}
+
+.nav-item-body {
+    display: flex;
+    flex-direction: column;
+    gap: 3px
+}
+
+.nav-item-body strong {
+    font: 600 18px/1.05 var(--display);
+    letter-spacing: -.005em;
+    text-transform: uppercase;
+    text-wrap: balance
+}
+
+.nav-item-body small {
+    font-size: 12px;
+    line-height: 1.45;
+    color: #8a877f
+}
+
+.nav-panel li a i {
+    display: inline-flex;
+    color: #56544e;
+    transition: color .25s ease, transform .25s ease
+}
+
+.nav-panel li a:hover i,
+.nav-panel li a:focus-visible i {
+    color: var(--lime);
+    transform: translate(2px, -2px)
+}
+
+.nav-panel li a[aria-current] .nav-item-body strong {
+    color: var(--lime)
+}
+
+/* ---- burger + drawer ---- */
+.nav-burger {
+    display: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: none;
+    border: 0;
+    position: relative
+}
+
+.nav-burger span {
+    position: absolute;
+    left: 10px;
+    width: 20px;
+    height: 1.5px;
+    background: var(--cream);
+    transition: transform .3s cubic-bezier(.22, 1, .36, 1), opacity .2s ease
+}
+
+.nav-burger span:first-child {
+    top: 17px
+}
+
+.nav-burger span:last-child {
+    top: 23px
+}
+
+.drawer-open .nav-burger span:first-child {
+    transform: translateY(3px) rotate(45deg)
+}
+
+.drawer-open .nav-burger span:last-child {
+    transform: translateY(-3px) rotate(-45deg)
+}
+
+.nav-drawer {
+    display: none
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    .nav-panel,
+    .nav-drawer {
+        animation: none
+    }
+
+    .nav-links>a::after,
+    .nav-trigger::after,
+    .nav-trigger i,
+    .nav-burger span,
+    .nav-panel a {
+        transition: none
+    }
 }
 
 .nav-book {
@@ -1146,14 +1435,103 @@ footer small {
 }
 
 @media(max-width:760px) {
-    nav {
+    .site-nav {
         height: 62px;
         padding: 0 18px;
         background: #10100ee8
     }
 
+    /* The links move into the drawer rather than disappearing: hiding them
+       outright left the header with no navigation at all below this width. */
     .nav-links {
         display: none
+    }
+
+    .nav-burger {
+        display: block;
+        margin-right: -10px
+    }
+
+    .nav-drawer {
+        display: block;
+        position: fixed;
+        inset: 62px 0 0;
+        z-index: 19;
+        background: #10100ef7;
+        backdrop-filter: blur(16px);
+        animation: nav-drawer-in .26s cubic-bezier(.22, 1, .36, 1)
+    }
+
+    .nav-drawer-scroll {
+        height: 100%;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        padding: 26px 18px calc(28px + env(safe-area-inset-bottom))
+    }
+
+    .nav-drawer section {
+        margin-top: 26px
+    }
+
+    .nav-drawer-label {
+        margin: 0 0 10px;
+        font: 500 10px var(--mono);
+        letter-spacing: .14em;
+        text-transform: uppercase;
+        color: var(--lime)
+    }
+
+    .nav-drawer li+li {
+        border-top: 1px solid rgba(239, 237, 230, .1)
+    }
+
+    .nav-drawer li a {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 12px;
+        align-items: center;
+        padding: 14px 0;
+        color: var(--cream)
+    }
+
+    .nav-drawer-link {
+        display: block;
+        padding: 14px 0;
+        font: 600 22px/1 var(--display);
+        text-transform: uppercase;
+        letter-spacing: -.01em;
+        color: var(--cream);
+        border-bottom: 1px solid rgba(239, 237, 230, .1)
+    }
+
+    .nav-drawer-tail {
+        margin-top: 26px;
+        border-top: 1px solid rgba(239, 237, 230, .1)
+    }
+
+    .nav-drawer-book {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 30px
+    }
+
+    /* The bar's own Book button would duplicate the drawer's while the drawer
+       is open, and it crowds the burger at this width. */
+    .site-nav .nav-book {
+        display: none
+    }
+
+    /* The page's persistent bottom CTA is a sibling of the header, and it was
+       floating over the drawer's last rows. */
+    .site-nav.drawer-open~.mobile-book {
+        display: none
+    }
+
+    @keyframes nav-drawer-in {
+        from {
+            opacity: 0;
+            transform: translateY(-8px)
+        }
     }
 
     .logo-svg {

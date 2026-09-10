@@ -26,6 +26,11 @@ export const Minus = ({ size = 15 }: IconProps) => (
   <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M5 12h14" /></svg>
 );
 
+/** Dropdown affordance. Deliberately lighter than the arrows — it marks state, not direction. */
+export const Chevron = ({ size = 15 }: IconProps) => (
+  <svg {...base} strokeWidth={2} width={size} height={size} viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
+);
+
 export const Close = ({ size = 15 }: IconProps) => (
   <svg {...base} width={size} height={size} viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" /></svg>
 );
