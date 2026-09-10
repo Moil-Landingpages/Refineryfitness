@@ -65,8 +65,13 @@ export const Instagram = ({ size = 16 }: IconProps) => (
   <svg {...solid} width={size} height={size} viewBox="0 0 24 24"><path d="M8 3h8a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5V8a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h8a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H8Zm4 2.6a4.4 4.4 0 1 1 0 8.8 4.4 4.4 0 0 1 0-8.8Zm0 2a2.4 2.4 0 1 0 0 4.8 2.4 2.4 0 0 0 0-4.8Zm4.7-2.9a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2Z" /></svg>
 );
 
+export const LinkedIn = ({ size = 16 }: IconProps) => (
+  <svg {...solid} width={size} height={size} viewBox="0 0 24 24"><path d="M5.5 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3.7 9h3.6v11.5H3.7V9Zm6.1 0h3.45v1.57h.05c.48-.87 1.65-1.79 3.4-1.79 3.63 0 4.3 2.3 4.3 5.3v6.42h-3.6v-5.7c0-1.36-.03-3.1-1.94-3.1-1.94 0-2.24 1.47-2.24 3v5.8H9.8V9Z" /></svg>
+);
+
 /** Keyed by `SOCIALS[].id`, so the footer renders whatever lib/site.ts lists. */
 export const SOCIAL_ICONS: Record<string, (props: IconProps) => React.ReactElement> = {
   facebook: Facebook,
   instagram: Instagram,
+  linkedin: LinkedIn,
 };

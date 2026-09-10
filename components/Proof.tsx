@@ -2,6 +2,7 @@ import Image from "next/image";
 import { BookButton } from "@/components/Booking";
 import { ArrowUpRight } from "@/components/icons";
 import SectionMark from "@/components/SectionMark";
+import { testimonials } from "@/lib/testimonials";
 
 /**
  * Who the coaching is for, and one documented result.
@@ -27,6 +28,21 @@ export default function Proof() {
       <p>Refinery Fitness is built for the person tired of fitness culture that demands more than life can give. No guilt about the years you did not train. No pretending your week is somebody else’s. Just a plan that fits the schedule you actually have—and a coach who notices when you go quiet.</p>
       <p className="proof-note">NO ONE IS TOO FAR GONE.</p>
       <BookButton className="under-link" topic="Free intro session">Start with a free intro <span><ArrowUpRight size={13} /></span></BookButton>
+    </div>
+
+    <div className="proof-quotes" data-reveal-group>
+      {testimonials.map((testimonial) => (
+        <figure className="quote-card" key={testimonial.name}>
+          <span className="quote-stars" aria-label={`${testimonial.stars} out of 5 stars`}>
+            {"★".repeat(testimonial.stars)}
+          </span>
+          <blockquote>{testimonial.quote}</blockquote>
+          <figcaption>
+            <strong>{testimonial.name}</strong>
+            <small>{testimonial.context}</small>
+          </figcaption>
+        </figure>
+      ))}
     </div>
 
     <div className="proof-showcase" data-reveal-group>

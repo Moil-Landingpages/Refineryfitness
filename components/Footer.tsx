@@ -24,7 +24,10 @@ export default function Footer() {
   const columns = [
     { label: "Train", pages: [{ path: "/personal-training", label: "Personal training" }, ...pagesInGroup("program")] },
     { label: "Areas served", pages: pagesInGroup("location").map((page) => ({ path: page.path, label: shortLabel(page) })) },
-    { label: "Refinery", pages: pagesInGroup("company") },
+    // `/gear` is appended by hand rather than added to the registry: it is a
+    // `noindex` page, so it must stay out of the sitemap, but it still needs a
+    // link from every page or nobody but Jeff will ever find it.
+    { label: "Refinery", pages: [...pagesInGroup("company"), { path: "/gear", label: "Recommended gear" }] },
   ];
 
   return <footer>

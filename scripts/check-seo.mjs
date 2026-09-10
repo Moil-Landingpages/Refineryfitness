@@ -17,7 +17,9 @@
 
 const BASE = (process.argv[2] ?? process.env.SEO_BASE_URL ?? "http://localhost:3000").replace(/\/$/, "");
 // Every indexable route. Keep in step with lib/pages.ts — a page missing here
-// is a page nobody is checking.
+// is a page nobody is checking. `/gear` is deliberately absent: it is `noindex`
+// by design, so it fails these assertions on purpose and gets its own set
+// below.
 const ROUTES = [
   "/",
   "/personal-training",
@@ -141,6 +143,51 @@ async function checkRoute(route) {
   }
 }
 
+/**
+ * The affiliate page, which is checked for the opposite of everything above.
+ *
+ * It must stay out of the index and out of the sitemap — it is a thin list of
+ * outbound links, and this site's whole position rests on not publishing thin
+ * pages. Every link must carry `rel="sponsored nofollow"`, which Google
+ * requires for paid links and which is the easiest thing in the file for a
+ * later edit to drop, and the FTC disclosure must be in the rendered HTML
+ * rather than behind a click.
+ */
+async function checkAffiliatePage(route) {
+  const res = await fetch(`${BASE}${route}`, { redirect: "manual" });
+  if (res.status !== 200) {
+    fail(route, `expected 200, got ${res.status}`);
+    return;
+  }
+  const html = await res.text();
+
+  const robots = pick(html, /<meta name="robots" content="([^"]*)"/i);
+  if (!robots || !/noindex/i.test(robots)) {
+    fail(route, `robots says "${robots ?? "nothing"}" — this route must be noindex`);
+  }
+
+  // Outbound links only: internal navigation on the page is not sponsored.
+  const outbound = [...html.matchAll(/<a\b[^>]*href="(https?:\/\/[^"]+)"[^>]*>/gi)]
+    .filter(([tag]) => !/refineryfitness\.biz|moilapp\.com|facebook\.com|instagram\.com|linkedin\.com/i.test(tag));
+
+  if (!outbound.length) fail(route, "no outbound affiliate links found — is the list still rendering?");
+  for (const [tag, href] of outbound) {
+    const rel = tag.match(/rel="([^"]*)"/i)?.[1] ?? "";
+    if (!/\bsponsored\b/.test(rel)) fail(route, `${href} is missing rel="sponsored"`);
+    if (!/\bnofollow\b/.test(rel)) fail(route, `${href} is missing rel="nofollow"`);
+    if (/target="_blank"/i.test(tag) && !/\bnoopener\b/.test(rel)) {
+      fail(route, `${href} opens in a new tab without rel="noopener"`);
+    }
+  }
+
+  if (!/affiliate links/i.test(html)) {
+    fail(route, "no affiliate disclosure in the rendered HTML — the FTC asks for it clear and conspicuous");
+  }
+
+  const sitemap = await (await fetch(`${BASE}/sitemap.xml`)).text();
+  if (sitemap.includes(route)) fail(route, "appears in sitemap.xml, but it is noindex");
+}
+
 async function checkDiscoveryFile(path, expectations) {
   const res = await fetch(`${BASE}${path}`);
   if (res.status !== 200) {
@@ -159,6 +206,8 @@ for (const route of ROUTES) {
   await checkRoute(route);
   console.log(`  checked ${route}`);
 }
+await checkAffiliatePage("/gear");
+console.log("  checked /gear (noindex + affiliate rel attributes)");
 // The AI retrieval crawlers must stay named in robots.txt. A blanket allow
 // covers them, so this guards the intent: nobody can remove citation access
 // for ChatGPT, Claude, or Perplexity without this check going red.

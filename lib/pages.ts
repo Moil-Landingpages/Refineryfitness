@@ -40,7 +40,12 @@ export const PROGRAM_PATHS: Record<string, string> = {
   virtual: "/programs/virtual-coaching",
 };
 
-const LABELS: Record<string, string> = { "/": "Home" };
+/**
+ * Labels for paths outside the registry. `/gear` is deliberately not a registry
+ * entry — it is `noindex`, so it must stay out of the sitemap — but it still
+ * needs a readable crumb rather than its own URL.
+ */
+const LABELS: Record<string, string> = { "/": "Home", "/gear": "Recommended gear" };
 
 /**
  * The label for a place, without the service prefix its page title carries.

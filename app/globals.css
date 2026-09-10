@@ -1147,6 +1147,72 @@ h2 em {
     color: var(--orange)
 }
 
+/* ---- client testimonials ---------------------------------------------------
+   A quote sits between the story and the result showcase: the story says who
+   the coaching is for, the quote is someone saying it worked, the stats card
+   gives the measured version.
+
+   The card is ink because `.proof` has no background of its own — it inherits
+   the page's cream — so a cream card would have been invisible. Ink between the
+   cream story above and the photo-plus-orange row below also gives the section
+   a rhythm, and puts the weight on the one element on the page a stranger
+   wrote. */
+.proof-quotes {
+    grid-column: 1/-1;
+    margin-top: 68px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(430px, 100%), 1fr));
+    gap: 16px
+}
+
+.quote-card {
+    margin: 0;
+    padding: 46px 52px 42px;
+    background: var(--ink);
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    gap: 24px
+}
+
+.quote-stars {
+    font-size: 14px;
+    letter-spacing: .34em;
+    color: var(--orange)
+}
+
+.quote-card blockquote {
+    margin: 0;
+    /* A pull quote, not body copy: bigger than the surrounding prose and held
+       to a readable measure rather than running the full width of the card. */
+    max-width: 58ch;
+    font-size: clamp(19px, 1.75vw, 25px);
+    line-height: 1.48;
+    letter-spacing: -.01em
+}
+
+.quote-card figcaption {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    margin-top: auto;
+    padding-top: 6px
+}
+
+.quote-card figcaption strong {
+    font: 600 21px/1 var(--display);
+    text-transform: uppercase;
+    letter-spacing: -.005em;
+    color: var(--lime)
+}
+
+.quote-card figcaption small {
+    font: 500 10px var(--mono);
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: #8a877f
+}
+
 .result-card {
     grid-column: 1/-1;
     background: var(--orange);
@@ -1802,6 +1868,15 @@ footer small {
 
     .final .button {
         width: 100%
+    }
+
+    .proof-quotes {
+        margin-top: 44px
+    }
+
+    .quote-card {
+        padding: 30px 24px 28px;
+        gap: 18px
     }
 
     footer {
@@ -3546,6 +3621,84 @@ footer small {
     font-size: 14px;
     line-height: 1.55;
     color: #4a483f
+}
+
+/* Recommended gear — /gear.
+   The disclosure is styled to be read, not skimmed past: it sits above the
+   links, at body size, on the orange rule. The FTC asks for clear and
+   conspicuous, and small grey print at the bottom is neither. */
+.gear-disclosure {
+    margin: 0 0 34px;
+    padding: 16px 0 0;
+    border-top: 2px solid var(--orange);
+    font-size: 15px;
+    line-height: 1.62;
+    color: #4a483f
+}
+
+.gear-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid var(--line)
+}
+
+.gear-list li {
+    border-bottom: 1px solid var(--line)
+}
+
+.gear-list li a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 22px 0;
+    transition: padding .25s, color .25s
+}
+
+.gear-list li a:hover {
+    padding-left: 12px;
+    color: var(--orange)
+}
+
+.gear-body strong {
+    display: block;
+    font: 600 21px/1.15 var(--display);
+    text-transform: uppercase;
+    letter-spacing: -.01em
+}
+
+.gear-body small {
+    display: block;
+    margin-top: 6px;
+    font: 500 11px/1 var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    color: var(--dim)
+}
+
+.gear-list li a i {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    transition: background .25s, border-color .25s, color .25s
+}
+
+.gear-list li a:hover i {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--cream)
+}
+
+.gear-note {
+    margin: 30px 0 0;
+    font-size: 14px;
+    line-height: 1.62;
+    color: var(--dim)
 }
 
 .page-cta {
