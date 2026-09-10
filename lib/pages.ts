@@ -42,6 +42,13 @@ export const PROGRAM_PATHS: Record<string, string> = {
 
 const LABELS: Record<string, string> = { "/": "Home" };
 
+/**
+ * The label for a place, without the service prefix its page title carries.
+ * "Personal trainer in Buda" is the right title for that page and the wrong
+ * thing to read in a column already headed "Areas served".
+ */
+export const shortLabel = (page: PageEntry) => page.label.replace(/^Personal trainer in /, "");
+
 export const pageByPath = (path: string) => PAGES.find((page) => page.path === path);
 
 export const pagesInGroup = (group: PageEntry["group"]) => PAGES.filter((page) => page.group === group);

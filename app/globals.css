@@ -1379,33 +1379,76 @@ h2 em {
     transform: none
 }
 
+/* ---- footer ----------------------------------------------------------------
+   Two regions: a brand column and the link columns sharing a top edge, then a
+   rule and the credit strip. It used to be a single grid whose direct children
+   were the logo, the tagline, the email and the nav, which strung all four
+   across one line and left the column headings floating out of alignment. */
 footer {
     background: var(--ink);
     color: var(--cream);
-    padding: 53px 9vw;
+    padding: 88px 9vw 34px
+}
+
+.footer-top {
     display: grid;
-    grid-template-columns: 1.5fr 2fr 1.3fr;
-    align-items: center;
-    gap: 30px
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: clamp(40px, 6vw, 104px);
+    align-items: start;
+    padding-bottom: 52px
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    max-width: 330px
 }
 
 footer p {
-    font-size: 13px;
+    font-size: 14px;
     color: #aaa79e;
-    line-height: 1.6;
-    margin: 0
+    line-height: 1.65;
+    margin: 0;
+    max-width: 30ch
 }
 
-footer>a:not(.logo) {
-    font: 10px var(--mono);
+/* One label style for both the contact block and the column headings, so the
+   two halves of the footer read as the same system. Lime, not orange: the
+   ground here is ink, and that is the site's rule for which accent applies. */
+.footer-label {
+    display: block;
+    font: 500 10px var(--mono);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--lime)
+}
+
+.footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.footer-email {
+    font: 500 15px var(--mono);
+    color: var(--cream);
+    border-bottom: 1px solid #45443e;
+    padding-bottom: 7px;
+    width: max-content;
+    max-width: 100%;
+    word-break: break-all;
+    transition: color .2s, border-color .2s
+}
+
+.footer-email:hover {
     color: var(--lime);
-    text-decoration: underline;
-    text-underline-offset: 5px
+    border-color: var(--lime)
 }
 
 footer small {
-    grid-column: 1/-1;
-    padding-top: 22px;
+    padding-top: 24px;
     border-top: 1px solid #393832;
     color: #76746d;
     font: 9px var(--mono);
@@ -1762,17 +1805,23 @@ footer small {
     }
 
     footer {
-        display: block;
-        padding: 48px 23px 103px
+        padding: 56px 23px 103px
     }
 
-    footer>* {
-        display: block;
-        margin-bottom: 20px !important
+    /* Brand above the columns, and the columns two-up: three 14px columns at
+       this width leave each one narrow enough to wrap every label. */
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 42px;
+        padding-bottom: 34px
+    }
+
+    .footer-brand {
+        max-width: none
     }
 
     footer small {
-        margin-top: 35px !important
+        margin-top: 6px
     }
 
     .mobile-book {
@@ -2614,10 +2663,6 @@ button.under-link {
 }
 
 /* ---- footer socials -------------------------------------------------------- */
-footer {
-    grid-template-columns: 1.15fr 1.7fr 1.05fr auto
-}
-
 .socials {
     list-style: none;
     display: flex;
@@ -3567,44 +3612,52 @@ footer small {
     }
 }
 
-/* The footer's link columns, added so the location and program pages carry an
-   internal link from every page. Sits between the email line and the social
-   list, on the footer's existing centred rhythm. */
+/* The link columns, so every location and program page carries an internal
+   link from every page on the site. */
 .footer-nav {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 34px;
-    width: min(760px, 100%);
-    margin: 40px auto 8px;
-    text-align: left
+    gap: 30px
 }
 
 .footer-nav>div {
     display: flex;
     flex-direction: column;
-    gap: 10px
+    align-items: flex-start;
+    gap: 12px
 }
 
-.footer-nav strong {
-    font: 500 10px var(--mono);
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: var(--orange)
+.footer-nav .footer-label {
+    margin-bottom: 4px
 }
 
 .footer-nav a {
     font-size: 14px;
+    line-height: 1.3;
     color: #a9a69d;
-    transition: color .2s
+    transition: color .2s, transform .2s cubic-bezier(.22, 1, .36, 1)
 }
 
 .footer-nav a:hover {
-    color: var(--cream)
+    color: var(--cream);
+    transform: translateX(3px)
 }
 
-@media (max-width:720px) {
+/* Two columns below the breakpoint: three at 390px leaves each narrow enough
+   to wrap "Personal training" and "Virtual Coaching" onto two lines. Declared
+   here, immediately after the rule it overrides — the earlier mobile block
+   lost to it on source order at equal specificity. */
+@media(max-width:760px) {
     .footer-nav {
         grid-template-columns: 1fr 1fr;
-        gap: 26px
+        gap: 30px 24px
+    }
+}
+
+@media(prefers-reduced-motion:reduce) {
+
+    .footer-nav a,
+    .footer-email {
+        transition: none
     }
 }
