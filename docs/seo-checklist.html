@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Refinery Fitness of Buda — SEO Implementation Checklist</title>
+<meta name="robots" content="noindex, nofollow">
+<style>:root{--ink:#10100e;--paper:#efede6;--paper-dim:#a9a69d;--card:#e6e3da;--accent:#f35b37;--accent-dark:#f35b37;--accent-ink:#a83a18;--accent-on:#10100e;--ok:#4f7a3a;--muted:#5a584f;--line:rgba(16,16,14,.18)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+/* A display rule on an element out-specifies the browser's own
+   [hidden]{display:none}, so both the filter and the no-JS state of the
+   control bar silently stopped working. Restate it with weight. */
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+header.doc{background:var(--ink);color:var(--paper);padding:56px 0 48px}
+/* Three accent roles, because one hue cannot serve all three surfaces:
+   --accent fills a shape, --accent-dark is text on the ink header, and
+   --accent-ink is small text on the light paper. Measured to 4.5:1. */
+.eyebrow{font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--accent-dark);margin:0 0 18px}
+header.doc h1{margin:0;font-size:clamp(30px,4.4vw,50px);line-height:1.05;
+  letter-spacing:-.02em;font-weight:800}
+header.doc .sub{margin:16px 0 0;max-width:62ch;color:var(--paper-dim);font-size:16px}
+.meta{margin:30px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:16px 28px;border-top:1px solid rgba(255,255,255,.18);padding-top:22px}
+.meta dt{font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--accent-dark);margin:0 0 7px}
+.meta dd{margin:0;font-size:14px;color:var(--paper);word-break:break-word}
+
+.scoreboard{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:14px;margin:36px 0 0}
+.score{border:1px solid var(--line);background:var(--card);padding:18px 20px}
+.score b{display:block;font-size:34px;line-height:1;letter-spacing:-.03em;font-weight:800}
+.score span{display:block;margin-top:8px;font:700 10px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.score.done b{color:var(--ok)} .score.you b{color:var(--accent-ink)} .score.next b{color:var(--muted)}
+
+.bar{height:9px;background:var(--line);margin:26px 0 0;overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+.bar .i-done{background:var(--ok)} .bar .i-you{background:var(--accent)}
+.bar .i-next{background:var(--muted);opacity:.45}
+.bar-key{margin:12px 0 0;font-size:13px;color:var(--muted)}
+
+.legend{margin:40px 0 0;border:1px solid var(--line);background:var(--card);padding:22px 24px}
+.legend h2{margin:0 0 14px;font-size:13px;letter-spacing:.12em;text-transform:uppercase;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.legend ul{margin:0;padding:0;list-style:none;display:grid;gap:11px}
+.legend li{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--muted)}
+.legend b{color:var(--ink)}
+
+.controls{margin:40px 0 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.controls .lbl{font:700 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--muted);margin-right:6px}
+.controls button{font:600 13px/1 inherit;padding:9px 15px;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);cursor:pointer;border-radius:2px}
+.controls button[aria-pressed=true]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+section.block{margin:54px 0 0;scroll-margin-top:20px}
+section.block>h2{margin:0;font-size:clamp(21px,2.5vw,28px);letter-spacing:-.02em;
+  padding-bottom:14px;border-bottom:2px solid var(--ink)}
+section.block>.lede{margin:16px 0 0;color:var(--muted);max-width:70ch;font-size:15px}
+.group{margin:30px 0 0}
+.group>h3{margin:0 0 14px;font:700 11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;
+  letter-spacing:.15em;text-transform:uppercase;color:var(--accent-ink)}
+
+ul.items{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+ul.items>li{display:grid;grid-template-columns:26px 1fr auto;gap:14px 16px;
+  padding:17px 0;border-bottom:1px solid var(--line);align-items:start}
+.mark{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+  font-size:12px;font-weight:800;margin-top:1px;flex:none}
+.mark.done{background:var(--ok);color:#fff}
+.mark.you{background:var(--accent);color:var(--accent-on)}
+.mark.next{background:transparent;border:1.5px dashed var(--muted);color:transparent}
+.it-body strong{display:block;font-size:15.5px;font-weight:700;letter-spacing:-.005em}
+.it-body p{margin:6px 0 0;font-size:14.5px;line-height:1.6;color:var(--muted)}
+.it-body code{font:12.5px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;
+  background:var(--card);border:1px solid var(--line);padding:1px 5px;border-radius:2px;
+  word-break:break-word}
+.who{font:700 9.5px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;padding-top:3px;text-align:right}
+.who.client{color:var(--accent-ink)}
+
+.note{margin:54px 0 0;border-left:3px solid var(--accent);background:var(--card);
+  padding:20px 24px}
+.note h2{margin:0 0 10px;font-size:16px}
+.note p{margin:0 0 10px;font-size:14.5px;color:var(--muted)}
+.note p:last-child{margin-bottom:0}
+
+footer.doc{margin:64px 0 0;border-top:1px solid var(--line);padding:26px 0 60px;
+  font-size:13px;color:var(--muted)}
+footer.doc a{color:inherit}
+
+@media (max-width:640px){
+  ul.items>li{grid-template-columns:26px 1fr}
+  .who{grid-column:2;text-align:left;padding-top:2px}
+}
+@media print{
+  body{background:#fff}
+  header.doc{background:#fff;color:#000;border-bottom:3px solid #000;padding:0 0 24px}
+  header.doc .sub,.meta dd{color:#000}
+  .meta{border-color:#bbb}
+  .controls{display:none}
+  section.block{break-inside:auto}
+  ul.items>li{break-inside:avoid}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:11px;color:#555}
+}
+</style>
+</head><body>
+<header class="doc"><div class="wrap">
+<p class="eyebrow">SEO &amp; AI-search implementation</p>
+<h1>Refinery Fitness of Buda<br>SEO Implementation Checklist</h1>
+<p class="sub">Everything we have built into the website so far for Google and for AI assistants like ChatGPT and Claude, and everything still outstanding — including the parts that need Jeff rather than a developer.</p>
+<dl class="meta">
+<div><dt>Website</dt><dd>refineryfitness.biz</dd></div>
+<div><dt>Business type</dt><dd>Service-area business — in person, mobile, and virtual</dd></div>
+<div><dt>Published service area</dt><dd>Buda, Kyle, Hays County, TX</dd></div>
+<div><dt>Pages live</dt><dd>11 indexable, 1 unlisted</dd></div>
+<div><dt>Prepared</dt><dd>11 September 2026</dd></div>
+</dl></div></header>
+<main class="wrap">
+<div class="scoreboard">
+<div class="score done"><b>24</b><span>Built &amp; verified</span></div>
+<div class="score you"><b>12</b><span>Waiting on you</span></div>
+<div class="score next"><b>8</b><span>Queued for us</span></div>
+<div class="score"><b>44</b><span>Items tracked</span></div>
+</div>
+<div class="bar" role="img" aria-label="24 of 44 items complete"><i class="i-done" style="width:54.55%"></i><i class="i-you" style="width:27.27%"></i><i class="i-next" style="width:18.18%"></i></div>
+<p class="bar-key"><strong>24 of 44</strong> items are done. The developer half of the work is complete; what remains is mostly account access and business facts only you can confirm.</p>
+<div class="legend"><h2>How to read this</h2><ul>
+<li><span class="mark done">✓</span><div><b>Done</b> — built, tested, and live on the deploy preview. Nothing further needed.</div></li>
+<li><span class="mark you">!</span><div><b>Waiting on you</b> — blocked on a fact, a decision, or an account only you can provide. These are the ones that move the needle next.</div></li>
+<li><span class="mark next"></span><div><b>Queued for us</b> — our work, scheduled once the item above it is unblocked.</div></li>
+</ul></div>
+<div class="controls" hidden><span class="lbl">Show</span><button data-filter="all" aria-pressed="true">Everything</button><button data-filter="done" aria-pressed="false">Done</button><button data-filter="you" aria-pressed="false">Waiting on you</button><button data-filter="next" aria-pressed="false">Queued for us</button></div>
+<section class="block">
+<h2>Built and verified</h2>
+<p class="lede">The developer half of search work. All of this is in the code, covered by an automated test, and re-checked on every deploy.</p>
+<div class="group">
+<h3>Crawling &amp;amp; indexing</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>robots.txt published and permissive</strong><p>Generated from code, not hand-edited. Googlebot and Bingbot are named and allowed, and the sitemap is declared in it.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>AI answer engines explicitly allowed</strong><p><code>OAI-SearchBot</code> and <code>ChatGPT-User</code> (ChatGPT), <code>Claude-SearchBot</code> and <code>Claude-User</code> (Claude), <code>PerplexityBot</code> and <code>Perplexity-User</code>. These are the crawlers that fetch a page to <em>cite</em> it in an answer — separate from the ones that scrape for model training.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>XML sitemap generated from one page registry</strong><p>All 11 indexable pages. The sitemap is built from the same list that builds the site navigation, so a new page cannot ship unlisted — and an unlisted page is the most common way a new page never gets found. <code>/gear</code> is deliberately excluded — see below.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Self-referencing canonical on every page</strong><p>Each page declares itself as the canonical URL, so two paths that render the same content cannot compete with each other in search.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>No page left unlinked</strong><p>Every page is reachable from the site navigation or footer. A page with no internal links pointing at it is effectively invisible, however well written.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Pages built for search intent</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Location pages for Buda, Kyle and Hays County</strong><p>Each with its own original copy about how training actually works in that place. <b>We deliberately did not</b> mass-produce city pages by swapping a name — Google classes that as doorway pages and it carries a manual-action risk.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>A page for each program</strong><p>Strong Start, 1:1 Training, Mobile Training and Virtual Coaching, each answering what it is, who it suits and what it costs in time.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Personal-training hub, About and Contact</strong><p>The hub collects the programs; About carries Jeff's credentials as a person entity; Contact gives one clear path to book.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Unique title and description on every page</strong><p>Checked automatically — a duplicate fails the build. The Buda page title was rewritten once already because it exactly matched the homepage, which would have had the two competing for the site's most valuable search.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Social preview image on every page</strong><p>So a link shared to a text message, WhatsApp or Facebook renders as a proper card rather than a bare URL.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Structured data (how machines read the business)</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Business marked up as a HealthClub and LocalBusiness</strong><p>Name, logo, locality, service area, contact and the full program list, cross-referenced as one connected entity rather than scattered fragments.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Jeff marked up as a Person, linked to the business</strong><p>Includes his social profiles, so Google can resolve one identity across the web instead of guessing.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>LinkedIn added to the profile list</strong><p>This closed the last open item from the 7 August review call. It now feeds the structured data, the About page and the footer from one place.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Programs marked up as Services with their areas served</strong><p>Each program names the places it is actually offered in, read from a single service-area file so copy and markup can never drift apart.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>FAQ marked up for answer engines</strong><p>Questions and answers in a format ChatGPT, Claude and Google can quote directly.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>No star rating published — on purpose</strong><p>Google does not allow a business to publish its own collected reviews as a rating on its own site, and doing it anyway risks a penalty for zero gain. The automated test fails the build if one is ever added. Real stars come from the Google Business Profile.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Readable by AI assistants</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Content present in the HTML, not built by JavaScript</strong><p>Most AI retrieval crawlers do not run JavaScript. Navigation, FAQ answers and page copy are in the served HTML, so an assistant reads the same page a person does.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Facts written as labelled values</strong><p>Prices, durations, service areas and formats are marked up as labelled pairs rather than buried in prose, so a fragment lifted out of the page still carries its meaning.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>One H1 and one main landmark per page</strong><p>Checked automatically. Duplicated or missing landmarks are a common reason a parser misreads what a page is about.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Breadcrumb trail, visible and marked up</strong><p>The visible trail and its structured data are generated from one source, so they cannot disagree — which is the condition Google states for showing breadcrumbs in results.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Affiliate gear page</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Every affiliate link tagged sponsored and nofollow</strong><p>Google requires paid links to be disclosed in the markup. The automated test checks all five links on every build.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Affiliate disclosure above the links, not buried</strong><p>The FTC asks for disclosure that is clear and conspicuous, and before the reader clicks.</p></div><span class="who">Moil</span></li>
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>Page kept out of search results and the sitemap</strong><p>A short list of outbound links is thin content by definition, and this site's whole position rests on not publishing thin pages. It still works perfectly from a bio link or the footer.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Automated safety net</h3>
+<ul class="items">
+<li data-status="done"><span class="mark done" aria-hidden="true">✓</span><div class="it-body"><strong>A test suite that fails the build on an SEO regression</strong><p><code>npm run check:seo</code> checks all 11 pages for a unique title and description, a correct canonical, exactly one H1 and one main landmark, a social image, valid structured data with no broken internal references, a breadcrumb trail, and the absence of a self-published rating — plus the affiliate rules and the AI-crawler permissions. It runs as a release gate.</p></div><span class="who">Moil</span></li>
+</ul></div>
+</section>
+<section class="block">
+<h2>Waiting on Jeff</h2>
+<p class="lede">Each of these is one fact or one decision. Most take minutes to answer and unblock work we have already prepared for.</p>
+<div class="group">
+<h3>Facts the site is currently missing</h3>
+<ul class="items">
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>A public phone number — or confirmation that email is the policy</strong><p>There is no phone number on the site today. If email-only is deliberate, we will say so plainly on the Contact page. If not, we add it to the page and to the structured data the same day.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Which extra towns mobile training genuinely reaches</strong><p>San Marcos, Dripping Springs, Wimberley and South Austin are modelled in the code but switched off, because claiming an area that is not really served damages local trust. Each is one setting to flip once confirmed.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Evidence and permission for the results shown on the homepage</strong><p>The client outcomes are correctly not marked up as reviews, but the underlying permission and evidence still need to exist on file before they carry weight with a careful reader.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Credentials, with verification links where they exist</strong><p>The kinesiology training and any certifications. Verifiable credentials are one of the strongest trust signals for a health-adjacent business.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Reasons for each recommended product, if the gear page should rank</strong><p>Two or three sentences per item — why Jeff recommends it and who for — turns the gear page from a link list into something worth indexing. It is a one-line change on our side once written.</p></div><span class="who client">Client</span></li>
+</ul></div>
+<div class="group">
+<h3>Decisions only you can make</h3>
+<ul class="items">
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Google Business Profile: is there an eligible address?</strong><p>Refinery is a service-area business with no staffed storefront, so it is not eligible for a normal storefront listing. It <em>may</em> qualify for a service-area profile with a hidden address, if Jeff has an eligible business address. This decision determines whether Google Maps visibility is available at all.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Access to Search Console and analytics</strong><p>See the next section — without it we are working blind.</p></div><span class="who client">Client</span></li>
+</ul></div>
+</section>
+<section class="block">
+<h2>Search Console and the non-developer half</h2>
+<p class="lede">None of this is code. It is account setup, listings and measurement — the work that makes the site's technical groundwork actually pay off.</p>
+<div class="group">
+<h3>Google Search Console &amp;amp; verification</h3>
+<ul class="items">
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Verify the site in Google Search Console</strong><p>Add <code>refineryfitness.biz</code> as a property and verify ownership. Until this exists, nobody can see what Google indexed, what it ranked for, or what it refused to index. <b>This is the single most useful thing to do next.</b></p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Verify the site in Bing Webmaster Tools</strong><p>Bing data also feeds ChatGPT's web results, so this matters more than it used to. It imports directly from Search Console once that exists.</p></div><span class="who client">Client</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Submit the sitemap in both tools</strong><p>We do this the same day access lands.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Inspect one URL per page template</strong><p>Confirms Google sees the canonical, the structured data and the mobile render we intended, on a real crawl rather than in a local test.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Run the automated check against the live domain</strong><p><code>npm run check:seo -- https://refineryfitness.biz</code>. Everything has been verified against a production build; this repeats it against the real server, which is the only way to catch a hosting or redirect problem.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Confirm one-hop redirect between www and non-www</strong><p>Both should resolve to the single canonical host in one redirect. Two hosts serving the same site splits its search authority in half.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Baseline the numbers</strong><p>Record impressions, clicks, average position and indexed-page count in the first week, so later work can be measured against something.</p></div><span class="who">Moil</span></li>
+</ul></div>
+<div class="group">
+<h3>Google Business Profile and local listings</h3>
+<ul class="items">
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>Create the service-area profile, if eligible</strong><p>Approved name, category, hidden address, the confirmed service area, hours and the program list. This is what puts the business into map results and it is where real star ratings come from.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>One consistent name, address and phone everywhere</strong><p>Google, Bing Places, Apple Business Connect, Facebook, Instagram and any directory listing must agree exactly. Disagreement between listings is a leading cause of weak local ranking.</p></div><span class="who client">Client</span></li>
+<li data-status="you"><span class="mark you" aria-hidden="true">!</span><div class="it-body"><strong>A steady, honest flow of Google reviews</strong><p>Ask after a good session. Never incentivise, never bulk-request — both are against Google's policy and both are detectable.</p></div><span class="who client">Client</span></li>
+</ul></div>
+<div class="group">
+<h3>Ongoing, once measurement exists</h3>
+<ul class="items">
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Monthly check against the target searches</strong><p>Personal trainer in Buda, in Kyle, and across Hays County — tracked over time rather than spot-checked.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Check whether ChatGPT, Claude and Perplexity cite the site</strong><p>Ask each assistant the questions a real client would ask and record whether the site is named. This is the new half of search and almost nobody in the local market is measuring it yet.</p></div><span class="who">Moil</span></li>
+<li data-status="next"><span class="mark next" aria-hidden="true"></span><div class="it-body"><strong>Deepen the mobile-training page</strong><p>It is the strongest local asset in the set — the one offer whose value is inherently geographic. Travel radius, what Jeff brings, what a garage session needs.</p></div><span class="who">Moil</span></li>
+</ul></div>
+</section>
+<div class="note"><h2>What we could not check from here</h2>
+<p>We could not reach <code>refineryfitness.biz</code>, Google Search Console, a Google Business Profile, or any analytics from our build environment. Every statement about the <em>live</em> site is therefore based on the code and the deploy preview, not on an observed production page.</p>
+<p>Everything marked done was verified against a production build of the site and against the deploy preview. Once the site is live and we have Search Console access, we re-run the same checks against the real domain and update this page.</p></div>
+</main>
+<footer class="doc"><div class="wrap">
+Prepared by Moil · 11 September 2026 · This checklist lives in the project repository at <code>docs/seo-checklist.html</code> and is updated as work lands.
+</div></footer>
+<script>
+(function () {
+  var bar = document.querySelector('.controls');
+  if (!bar) return;
+  bar.hidden = false;                       // only shown when JS can drive it
+  var items = [].slice.call(document.querySelectorAll('ul.items > li'));
+  var groups = [].slice.call(document.querySelectorAll('.group'));
+  var blocks = [].slice.call(document.querySelectorAll('section.block'));
+  bar.addEventListener('click', function (e) {
+    var btn = e.target.closest('button');
+    if (!btn) return;
+    var want = btn.dataset.filter;
+    [].forEach.call(bar.querySelectorAll('button'), function (b) {
+      b.setAttribute('aria-pressed', String(b === btn));
+    });
+    items.forEach(function (li) {
+      li.hidden = want !== 'all' && li.dataset.status !== want;
+    });
+    // Hide a group or section once everything inside it is filtered away.
+    groups.concat(blocks).forEach(function (el) {
+      var rows = el.querySelectorAll('ul.items > li');
+      el.hidden = rows.length > 0 &&
+        [].every.call(rows, function (li) { return li.hidden; });
+    });
+  });
+})();
+</script>
+</body></html>
