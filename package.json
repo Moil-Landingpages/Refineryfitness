@@ -11,7 +11,8 @@
     "start": "next start",
     "test": "next build",
     "lint": "eslint . --ignore-pattern .next",
-    "email": "email dev --dir emails --port 3030"
+    "email": "email dev --dir emails --port 3030",
+    "check:seo": "node scripts/check-seo.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

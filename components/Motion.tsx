@@ -12,7 +12,7 @@ export default function Motion() {
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      ScrollTrigger.create({ start: "top -120", onToggle: (self) => document.querySelector("nav")?.classList.toggle("scrolled", self.isActive) });
+      ScrollTrigger.create({ start: "top -120", onToggle: (self) => document.querySelector(".site-nav")?.classList.toggle("scrolled", self.isActive) });
 
       // Ambient hero: continuous slow zoom + drifting chalk-dust field, so the
       // hero feels alive even while the video file doesn't exist.

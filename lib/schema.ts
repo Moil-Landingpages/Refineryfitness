@@ -1,17 +1,12 @@
 import { faqs } from "@/lib/faqs";
 import { programs } from "@/lib/programs";
+import { COVERAGE_STATEMENT, HOME_MARKET, areaServed } from "@/lib/market";
 import { EMAIL, SITE_NAME, SITE_URL, SOCIALS } from "@/lib/site";
 
 const BUSINESS = `${SITE_URL}/#business`;
 const WEBSITE = `${SITE_URL}/#website`;
 const WEBPAGE = `${SITE_URL}/#webpage`;
 const FOUNDER = `${SITE_URL}/#jeff`;
-
-const areaServed = [
-  { "@type": "City", name: "Buda", containedInPlace: { "@type": "AdministrativeArea", name: "Hays County, Texas" } },
-  { "@type": "City", name: "Kyle", containedInPlace: { "@type": "AdministrativeArea", name: "Hays County, Texas" } },
-  { "@type": "AdministrativeArea", name: "Hays County, Texas" },
-];
 
 export const schema = {
   "@context": "https://schema.org",
@@ -21,7 +16,7 @@ export const schema = {
       "@id": BUSINESS,
       name: SITE_NAME,
       alternateName: "Refinery Fitness",
-      description: "Faith-first, science-backed personal training and health coaching in Buda, Kyle, and Hays County, Texas.",
+      description: COVERAGE_STATEMENT,
       slogan: "More than motion.",
       url: SITE_URL,
       email: EMAIL,
@@ -30,7 +25,12 @@ export const schema = {
       logo: { "@type": "ImageObject", url: `${SITE_URL}/logo-512.png`, width: 512, height: 512 },
       // Service-area business: locality is accurate, street address intentionally
       // omitted because sessions happen in-person, mobile, or virtually.
-      address: { "@type": "PostalAddress", addressLocality: "Buda", addressRegion: "TX", addressCountry: "US" },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: HOME_MARKET.city,
+        addressRegion: HOME_MARKET.region,
+        addressCountry: HOME_MARKET.country,
+      },
       areaServed,
       knowsAbout: ["Personal training", "Strength training", "Health coaching", "Habit coaching", "Nutrition coaching", "Faith-based wellness"],
       founder: { "@id": FOUNDER },
@@ -68,7 +68,7 @@ export const schema = {
       "@id": WEBPAGE,
       url: SITE_URL,
       name: "Personal Trainer in Buda, TX | Refinery Fitness",
-      description: "Faith-first, science-backed personal training and health coaching in Buda, Kyle, and Hays County.",
+      description: COVERAGE_STATEMENT,
       isPartOf: { "@id": WEBSITE },
       about: { "@id": BUSINESS },
       primaryImageOfPage: { "@type": "ImageObject", url: `${SITE_URL}/images/refinery-hero-cable.jpg` },
